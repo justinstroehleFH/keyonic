@@ -7,27 +7,52 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./folder.page.scss'],
 })
 export class FolderPage implements OnInit {
-  public folder!: string;
+  protected folder!: string;
+  protected selected!: number;
+  protected passwordNoDisplay: string = '&#9679;';
 
-  public passworstArray = [
-    { name: 'FHV', password: '1234', url: 'www.ilias/fhv.at', label: 'Uni' },
-    { name: 'ZARA', password: 'z12z', url: 'www.zara.at', label: 'Shopping' },
-    { name: 'GIT', password: 'git4ever', url: 'www.github.com', label: 'Work' },
+  protected passwordArray = [
     {
-      name: 'ProTask',
+      title: 'FHV',
+      username: 'nto69',
+      password: '1234',
+      url: 'www.ilias/fhv.at',
+      label: 'Uni',
+    },
+    {
+      title: 'ZARA',
+      username: 'Shopper3000',
+      password: 'z12z',
+      url: 'www.zara.at',
+      label: 'Shopping',
+    },
+    {
+      title: 'GIT',
+      username: 'gitlover420',
+      password: 'git4ever',
+      url: 'www.github.com',
+      label: 'Work',
+    },
+    {
+      title: 'ProTask',
+      username: 'PT_JST',
       password: 'proNeverGonnaDie',
-      url: 'www.protask.com',
+      url: 'www.protask.eu',
       label: 'Work',
     },
   ];
 
-  public displayPasswords: any = [];
+  protected displayPasswords: any = [];
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id') as string;
-    this.displayPasswords = this.passworstArray.filter((e) =>
+    this.displayPasswords = this.passwordArray.filter((e) =>
       this.folder !== 'All' ? e.label === this.folder : e.label != ''
     );
+  }
+
+  protected select(index: number) {
+    this.selected = index;
   }
 }

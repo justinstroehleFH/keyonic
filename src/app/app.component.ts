@@ -6,10 +6,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   public labels = [
-    { labelName: 'All', icon: 'mail' },
-    { labelName: 'Work', icon: 'trash' },
-    { labelName: 'Uni', icon: 'paper-plane' },
-    { labelName: 'Shopping', icon: 'heart' },
+    { labelName: 'All', icon: 'list' },
+    { labelName: 'Work', icon: 'business' },
+    { labelName: 'Uni', icon: 'code' },
+    { labelName: 'Shopping', icon: 'bag' },
   ];
 
   public displayLabels = this.labels.map((label) => {
