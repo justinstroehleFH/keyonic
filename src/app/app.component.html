@@ -2,10 +2,14 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>KEYONIC</ion-list-header>
+        <ion-list id="label-list">
+          <ion-list-header>
+            <ion-label>KEYONIC</ion-label>
+            <ion-button
+              ><ion-icon slot="icon-only" name="add-outline"></ion-icon
+            ></ion-button>
+          </ion-list-header>
           <ion-note>Filepath maybe?</ion-note>
-
           <ion-menu-toggle
             auto-hide="false"
             *ngFor="let p of displayLabels; let i = index"

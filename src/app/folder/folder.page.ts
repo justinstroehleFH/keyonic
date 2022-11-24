@@ -10,7 +10,6 @@ export class FolderPage implements OnInit {
   protected folder!: string;
   protected selected!: any;
   protected selectedIndex!: number;
-  protected passwordNoDisplay: string = '&#9679;';
 
   protected passwordArray = [
     {
@@ -58,6 +57,11 @@ export class FolderPage implements OnInit {
     this.selectedIndex = index;
   }
 
+  protected contextClick(event: Event) {
+    event.preventDefault();
+    console.log('TODO POPOVER');
+  }
+
   protected copyUsername() {
     navigator.clipboard.writeText(this.selected.username);
   }
@@ -68,5 +72,9 @@ export class FolderPage implements OnInit {
 
   protected openURL() {
     window.open(this.selected.url);
+  }
+
+  protected editEntry() {
+    console.log('TODO');
   }
 }

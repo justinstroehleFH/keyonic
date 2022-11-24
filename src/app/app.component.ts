@@ -8,7 +8,7 @@ export class AppComponent {
   public labels = [
     { labelName: 'All', icon: 'list' },
     { labelName: 'Work', icon: 'business' },
-    { labelName: 'Uni', icon: 'code' },
+    { labelName: 'Uni', icon: 'school' },
     { labelName: 'Shopping', icon: 'bag' },
   ];
 
