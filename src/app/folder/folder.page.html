@@ -13,9 +13,18 @@
       <ion-title size="large">{{ folder }}</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-grid class="ion-margin">
+    <ion-row>
+      <ion-col>Name</ion-col>
+      <ion-col>Password</ion-col>
+      <ion-col>Url</ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row *ngFor="let password of displayPasswords; index as i">
+      <ion-col>{{ password.name }}</ion-col>
+      <ion-col>{{ password.password }}</ion-col>
+      <ion-col>{{ password.url }}</ion-col>
+      <ion-col><button>Edit</button></ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
