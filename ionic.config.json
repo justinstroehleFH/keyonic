@@ -1,0 +1,7 @@
+{
+  "name": "keyonic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
