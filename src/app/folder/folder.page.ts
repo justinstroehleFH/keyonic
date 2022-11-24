@@ -8,7 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class FolderPage implements OnInit {
   protected folder!: string;
-  protected selected!: number;
+  protected selected!: any;
+  protected selectedIndex!: number;
   protected passwordNoDisplay: string = '&#9679;';
 
   protected passwordArray = [
@@ -52,7 +53,20 @@ export class FolderPage implements OnInit {
     );
   }
 
-  protected select(index: number) {
-    this.selected = index;
+  protected select(entry: any, index: number) {
+    this.selected = entry;
+    this.selectedIndex = index;
+  }
+
+  protected copyUsername() {
+    navigator.clipboard.writeText(this.selected.username);
+  }
+
+  protected copyPassword() {
+    navigator.clipboard.writeText(this.selected.password);
+  }
+
+  protected openURL() {
+    window.open(this.selected.url);
   }
 }

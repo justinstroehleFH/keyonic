@@ -2,13 +2,22 @@
   <ion-toolbar>
     <ion-title>{{ folder }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button [disabled]="selected === undefined" tooltip="Copy username"
+      <ion-button
+        [disabled]="selectedIndex === undefined"
+        tooltip="Copy username"
+        (click)="copyUsername()"
         ><ion-icon name="person-outline"></ion-icon
       ></ion-button>
-      <ion-button [disabled]="selected === undefined" tooltip="Copy password"
+      <ion-button
+        [disabled]="selected === undefined"
+        tooltip="Copy password"
+        (click)="copyPassword()"
         ><ion-icon name="key-outline"></ion-icon
       ></ion-button>
-      <ion-button [disabled]="selected === undefined" tooltip="Open URL"
+      <ion-button
+        [disabled]="selected === undefined"
+        tooltip="Open URL"
+        (click)="openURL()"
         ><ion-icon name="globe-outline"></ion-icon
       ></ion-button>
       <ion-searchbar></ion-searchbar>
@@ -49,9 +58,9 @@
     <ion-item
       *ngFor="let password of displayPasswords; index as i"
       button
-      (click)="select(i)"
+      (click)="select(password, i)"
       lines="full"
-      [color]="selected === i ? 'primary' : ''"
+      [color]="selectedIndex === i ? 'primary' : ''"
     >
       <ion-col size="2">{{ password.title }}</ion-col>
       <ion-col>{{ password.username }}</ion-col>
