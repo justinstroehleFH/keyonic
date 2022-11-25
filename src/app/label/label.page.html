@@ -12,24 +12,28 @@
         ><ion-icon name="person-outline"></ion-icon
       ></ion-button>
       <ion-button
-        [disabled]="selected === undefined"
+        [disabled]="selectedIndex === undefined"
         tooltip="Copy password"
         (click)="copyPassword()"
         ><ion-icon name="key-outline"></ion-icon
       ></ion-button>
       <ion-button
-        [disabled]="selected === undefined"
+        [disabled]="selectedIndex === undefined"
         tooltip="Open URL"
         (click)="openURL()"
         ><ion-icon name="globe-outline"></ion-icon
       ></ion-button>
       <ion-button
         [disabled]="selectedIndex === undefined"
-        tooltip="Copy username"
-        (click)="editEntry()"
+        tooltip="Open details"
+        [routerLink]="'/details/' + selected?.id"
         ><ion-icon name="pencil-outline"></ion-icon
       ></ion-button>
-      <ion-searchbar></ion-searchbar>
+      <ion-searchbar
+        show-clear-button="focus"
+        [debounce]="1000"
+        (ionChange)="searchEntry($event)"
+      ></ion-searchbar>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="generatePassword()"
+        ><ion-icon name="color-wand-outline"></ion-icon
+      ></ion-button>
+      <ion-button (click)="show = !show"
+        ><ion-icon [name]="show ? 'eye-off-outline' : 'eye-outline'"></ion-icon
+      ></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item lines="inset">
+      <ion-label position="floating">Title</ion-label>
+      <ion-input placeholder="Title"></ion-input>
+    </ion-item>
+    <ion-item lines="inset">
+      <ion-label position="floating">Label</ion-label>
+      <ion-select placeholder="Select label">
+        <ion-select-option *ngFor="let option of labels" [value]="option"
+          >{{ option }}</ion-select-option
+        >
+      </ion-select>
+    </ion-item>
+    <ion-item lines="inset">
+      <ion-label position="floating">Username</ion-label>
+      <ion-input placeholder="Username"></ion-input>
+    </ion-item>
+    <ion-item
+      counter="true"
+      [counterFormatter]="counterFormatter"
+      lines="inset"
+    >
+      <ion-label position="floating">Password</ion-label>
+      <ion-input
+        maxlength="255"
+        placeholder="Password"
+        [type]="show ? 'text' : 'password'"
+      ></ion-input>
+    </ion-item>
+    <ion-item
+      lines="inset"
+      counter="true"
+      [counterFormatter]="counterFormatter"
+      [disabled]="show"
+    >
+      <ion-label position="floating">Repeat</ion-label>
+      <ion-input
+        maxlength="255"
+        placeholder="Repeat"
+        type="password"
+      ></ion-input>
+    </ion-item>
+    <ion-item lines="inset">
+      <ion-label position="floating">URL</ion-label>
+      <ion-input placeholder="URL" type="url"></ion-input>
+    </ion-item>
+  </ion-list>
+</ion-content>

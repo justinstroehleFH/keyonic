@@ -12,6 +12,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./label/label.module').then((m) => m.LabelPageModule),
   },
+  {
+    path: 'details/:hash',
+    loadChildren: () =>
+      import('./details/details.module').then((m) => m.DetailsPageModule),
+  },
 ];
 
 @NgModule({

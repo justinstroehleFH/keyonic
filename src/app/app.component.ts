@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   public labels = [
-    { labelName: 'All', icon: 'list' },
+    { labelName: 'All', icon: 'finger-print' },
     { labelName: 'Work', icon: 'business' },
     { labelName: 'Uni', icon: 'school' },
     { labelName: 'Shopping', icon: 'bag' },

@@ -13,6 +13,7 @@ export class LabelPage implements OnInit {
 
   protected passwordArray = [
     {
+      id: '1',
       title: 'FHV',
       username: 'nto69',
       password: '1234',
@@ -20,6 +21,7 @@ export class LabelPage implements OnInit {
       label: 'Uni',
     },
     {
+      id: '2',
       title: 'ZARA',
       username: 'Shopper3000',
       password: 'z12z',
@@ -27,6 +29,7 @@ export class LabelPage implements OnInit {
       label: 'Shopping',
     },
     {
+      id: '3',
       title: 'GIT',
       username: 'gitlover420',
       password: 'git4ever',
@@ -34,6 +37,7 @@ export class LabelPage implements OnInit {
       label: 'Work',
     },
     {
+      id: '4',
       title: 'ProTask',
       username: 'PT_JST',
       password: 'proNeverGonnaDie',
@@ -74,7 +78,12 @@ export class LabelPage implements OnInit {
     window.open(this.selected.url);
   }
 
-  protected editEntry() {
-    console.log('TODO');
+  protected searchEntry(event: Event) {
+    const query = (event as CustomEvent).detail.value.toLowerCase();
+    this.displayPasswords = this.passwordArray.filter((e) =>
+      this.label !== 'All'
+        ? e.label === this.label
+        : e.label != '' && e.title.toLowerCase().indexOf(query) > -1
+    );
   }
 }
