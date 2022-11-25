@@ -15,19 +15,19 @@ export class AppComponent {
   public displayLabels = this.labels.map((label) => {
     return {
       title: label.labelName,
-      url: `/folder/${label.labelName}`,
+      url: `/label/${label.labelName}`,
       icon: label.icon,
     };
   });
 
   // TODO Icons adden ??
   /*   public appPages = [
-    { title: 'All', url: '/folder/all', icon: 'mail' },
-    { title: 'Work', url: '/folder/Outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/Spam', icon: 'warning' },
+    { title: 'All', url: '/label/all', icon: 'mail' },
+    { title: 'Work', url: '/label/Outbox', icon: 'paper-plane' },
+    { title: 'Favorites', url: '/label/Favorites', icon: 'heart' },
+    { title: 'Archived', url: '/label/Archived', icon: 'archive' },
+    { title: 'Trash', url: '/label/Trash', icon: 'trash' },
+    { title: 'Spam', url: '/label/Spam', icon: 'warning' },
   ]; */
   constructor() {}
 }

@@ -2,19 +2,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
-import { FolderPage } from './folder.page';
+import { LabelPage } from './label.page';
 
-describe('FolderPage', () => {
-  let component: FolderPage;
-  let fixture: ComponentFixture<FolderPage>;
+describe('LabelPage', () => {
+  let component: LabelPage;
+  let fixture: ComponentFixture<LabelPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FolderPage],
-      imports: [IonicModule.forRoot(), RouterModule.forRoot([])]
+      declarations: [LabelPage],
+      imports: [IonicModule.forRoot(), RouterModule.forRoot([])],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FolderPage);
+    fixture = TestBed.createComponent(LabelPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

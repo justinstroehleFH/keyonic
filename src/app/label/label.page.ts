@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-folder',
-  templateUrl: './folder.page.html',
-  styleUrls: ['./folder.page.scss'],
+  selector: 'app-label',
+  templateUrl: './label.page.html',
+  styleUrls: ['./label.page.scss'],
 })
-export class FolderPage implements OnInit {
-  protected folder!: string;
+export class LabelPage implements OnInit {
+  protected label!: string;
   protected selected!: any;
   protected selectedIndex!: number;
 
@@ -46,9 +46,9 @@ export class FolderPage implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
-    this.folder = this.activatedRoute.snapshot.paramMap.get('id') as string;
+    this.label = this.activatedRoute.snapshot.paramMap.get('id') as string;
     this.displayPasswords = this.passwordArray.filter((e) =>
-      this.folder !== 'All' ? e.label === this.folder : e.label != ''
+      this.label !== 'All' ? e.label === this.label : e.label != ''
     );
   }
 
