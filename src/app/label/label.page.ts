@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-label',
@@ -47,7 +48,7 @@ export class LabelPage implements OnInit {
   ];
 
   protected displayPasswords: any = [];
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute, private toastController: ToastController) {}
 
   ngOnInit() {
     this.label = this.activatedRoute.snapshot.paramMap.get('id') as string;
@@ -66,12 +67,30 @@ export class LabelPage implements OnInit {
     console.log('TODO POPOVER');
   }
 
-  protected copyUsername() {
+   protected async copyUsername() {
     navigator.clipboard.writeText(this.selected.username);
+
+    const toast = await this.toastController.create({
+      message: 'Username Copied!',
+      duration: 1500,
+      position: 'top'
+    });
+
+    await toast.present();
   }
 
-  protected copyPassword() {
+
+  protected async copyPassword() {
     navigator.clipboard.writeText(this.selected.password);
+
+    const toast = await this.toastController.create({
+      message: 'Password Copied!',
+      duration: 1500,
+      position: 'top'
+    });
+
+    await toast.present();
+
   }
 
   protected openURL() {
