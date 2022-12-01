@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { KeyonicService } from '../services/keyonic.service';
 
 @Component({
   selector: 'app-details',
@@ -8,27 +9,15 @@ import { Component, OnInit } from '@angular/core';
 export class DetailsPage implements OnInit {
   protected show: boolean = false;
   protected labels: any[] = ['Work', 'Uni', 'Shopping'];
-  constructor() {}
+  constructor(private keyonicService: KeyonicService) {}
 
   ngOnInit() {}
 
-  counterFormatter(inputLength: number, maxLength: number) {
+  protected counterFormatter(inputLength: number, maxLength: number) {
     return `${inputLength} characters`;
   }
 
-  generatePassword() {
-
-   const base = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let password = '';
-   for (let index = 0; index < 20; index++) {
-    const randomChar = base.charAt(this.getRandomInt(base.length));
-    password = password.concat(randomChar);
-   }
-      console.log(password);
-    }
-
-    getRandomInt(max: number) {
-      return Math.floor(Math.random() * max);
-    }
-
+  protected generatePassword() {
+    console.log(this.keyonicService.generatePassword());
+  }
 }
