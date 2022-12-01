@@ -35,4 +35,9 @@ export class KeyonicService {
 
     await toast.present();
   }
+
+  public createLabel(label: { labelName: string; icon: string }) {
+    //TODO
+    console.log(label);
+  }
 }

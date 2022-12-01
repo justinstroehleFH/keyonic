@@ -60,6 +60,10 @@ export class LabelPage implements OnInit {
     );
   }
 
+  protected createEntry() {
+    //TODO
+  }
+
   protected select(entry: any, index: number) {
     this.selected = entry;
     this.selectedIndex = index;
