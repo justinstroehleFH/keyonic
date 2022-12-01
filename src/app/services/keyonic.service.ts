@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { File } from '@awesome-cordova-plugins/file/ngx';
+import { Label, Password } from '../libs/types';
+const temp = require('../../assets/temp.json');
 
 @Injectable({
   providedIn: 'root',
@@ -46,30 +48,20 @@ export class KeyonicService {
     await this.storage.create();
   }
 
-  public async createLabel(label: { labelName: string; icon: string }) {
-    let currentLabels = await this.storage.get('labels');
-    let labels = JSON.parse(currentLabels);
-    if (!labels) {
-      labels = [];
-    }
-    labels.push(label);
-    this.storage.set('labels', JSON.stringify(labels));
-  }
-
-  public async getLabels() {
-    let currentLabels = await this.storage.get('labels');
-    let labels = JSON.parse(currentLabels);
-    if (!labels) {
-      labels = [];
-      let label = { labelName: 'All', icon: 'finger-print' };
-      labels.push(label);
-      this.createLabel(label);
-    }
-    return labels;
-  }
+  public async createLabel(label: Label) {}
 
   public openFile(path: string) {
     //TODO
     console.log(path);
+  }
+
+  public getPasswords(filter: string) {
+    return (temp.passwords as Password[]).filter((e) =>
+      filter !== 'All' ? e.label === filter : e.label != ''
+    );
+  }
+
+  public getLabels(): Label[] {
+    return temp.labels as Label[];
   }
 }

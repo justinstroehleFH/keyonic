@@ -71,7 +71,7 @@
       </ion-col>
     </ion-item>
     <ion-item
-      *ngFor="let password of displayPasswords; index as i"
+      *ngFor="let password of displayedPasswords; index as i"
       button
       (click)="select(password, i)"
       (contextmenu)="contextClick($event)"

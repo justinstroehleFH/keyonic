@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
+import { Label, LabelURL } from './libs/types';
 import { KeyonicService } from './services/keyonic.service';
 @Component({
   selector: 'app-root',
@@ -7,19 +8,16 @@ import { KeyonicService } from './services/keyonic.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  protected labels!: [{ labelName: string; icon: string }];
   public icons = ['beer', 'chatbubbles', 'earth', 'rocket']; //TODO from file
   @ViewChild(IonModal)
   modal!: IonModal;
 
   // protected displayLabels!: [{ labelName: string; url: string; icon: string }];
-  protected displayLabels: any;
+  protected labels!: LabelURL[];
 
-  protected label: {
-    labelName: string;
-    icon: string;
-  } = {
+  protected label: LabelURL = {
     labelName: '',
+    url: '',
     icon: '',
   };
 
@@ -27,17 +25,14 @@ export class AppComponent {
 
   async ngOnInit() {
     await this.keyonicService.createStorage();
-    this.labels = await this.keyonicService.getLabels();
-    this.displayLabels = this.labels.map((label) => {
+    let tempLabels: Label[] = await this.keyonicService.getLabels();
+    this.labels = tempLabels.map((label) => {
       return {
-        title: label.labelName,
+        labelName: label.labelName,
         url: `/label/${label.labelName}`,
         icon: label.icon,
       };
     });
-    this.keyonicService.openFile(
-      'C:\\Users\\justi\\Documents\\FH\\Master\\1. Semester\\Desktop-Webapplikationen'
-    );
   }
 
   protected onWillDismiss(event: Event) {
@@ -52,6 +47,7 @@ export class AppComponent {
   protected async saveLabel() {
     await this.modal.dismiss(this.label, 'confirm');
     this.keyonicService.createLabel(this.label);
+    this.label.url = `/label/${this.label.labelName}`;
     this.labels.push(this.label);
   }
 
