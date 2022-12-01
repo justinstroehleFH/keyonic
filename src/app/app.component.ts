@@ -7,31 +7,13 @@ import { KeyonicService } from './services/keyonic.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  public labels = [
-    { labelName: 'All', icon: 'finger-print' },
-    { labelName: 'Work', icon: 'business' },
-    { labelName: 'Uni', icon: 'school' },
-    { labelName: 'Shopping', icon: 'bag' },
-  ];
-  public icons = [
-    'beer-outline',
-    'chatbubbles-outline',
-    'earth-outline',
-    'rocket-outline',
-    'logo-apple',
-    'logo-android',
-    'logo-usd',
-  ];
+  protected labels!: [{ labelName: string; icon: string }];
+  public icons = ['beer', 'chatbubbles', 'earth', 'rocket']; //TODO from file
   @ViewChild(IonModal)
   modal!: IonModal;
 
-  public displayLabels = this.labels.map((label) => {
-    return {
-      title: label.labelName,
-      url: `/label/${label.labelName}`,
-      icon: label.icon,
-    };
-  });
+  // protected displayLabels!: [{ labelName: string; url: string; icon: string }];
+  protected displayLabels: any;
 
   protected label: {
     labelName: string;
@@ -42,6 +24,18 @@ export class AppComponent {
   };
 
   constructor(private keyonicService: KeyonicService) {}
+
+  async ngOnInit() {
+    await this.keyonicService.createStorage();
+    this.labels = await this.keyonicService.getLabels();
+    this.displayLabels = this.labels.map((label) => {
+      return {
+        title: label.labelName,
+        url: `/label/${label.labelName}`,
+        icon: label.icon,
+      };
+    });
+  }
 
   protected onWillDismiss(event: Event) {
     console.log(event);

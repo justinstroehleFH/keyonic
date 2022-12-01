@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
   providedIn: 'root',
 })
 export class KeyonicService {
-  constructor(private toastController: ToastController) {}
+  constructor(
+    private toastController: ToastController,
+    private storage: Storage
+  ) {}
 
   public generatePassword() {
     const base =
@@ -36,8 +40,29 @@ export class KeyonicService {
     await toast.present();
   }
 
-  public createLabel(label: { labelName: string; icon: string }) {
-    //TODO
-    console.log(label);
+  public async createStorage() {
+    await this.storage.create();
+  }
+
+  public async createLabel(label: { labelName: string; icon: string }) {
+    let currentLabels = await this.storage.get('labels');
+    let labels = JSON.parse(currentLabels);
+    if (!labels) {
+      labels = [];
+    }
+    labels.push(label);
+    this.storage.set('labels', JSON.stringify(labels));
+  }
+
+  public async getLabels() {
+    let currentLabels = await this.storage.get('labels');
+    let labels = JSON.parse(currentLabels);
+    if (!labels) {
+      labels = [];
+      let label = { labelName: 'All', icon: 'finger-print' };
+      labels.push(label);
+      this.createLabel(label);
+    }
+    return labels;
   }
 }
