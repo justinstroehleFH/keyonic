@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { IonicStorageModule } from '@ionic/storage-angular';
+import { File } from '@awesome-cordova-plugins/file/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +20,10 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     FormsModule,
     IonicStorageModule.forRoot(),
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    File,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

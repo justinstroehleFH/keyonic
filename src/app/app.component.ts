@@ -35,6 +35,9 @@ export class AppComponent {
         icon: label.icon,
       };
     });
+    this.keyonicService.openFile(
+      'C:\\Users\\justi\\Documents\\FH\\Master\\1. Semester\\Desktop-Webapplikationen'
+    );
   }
 
   protected onWillDismiss(event: Event) {

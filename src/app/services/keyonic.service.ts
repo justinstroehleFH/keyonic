@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
+import { File } from '@awesome-cordova-plugins/file/ngx';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,8 @@ import { Storage } from '@ionic/storage-angular';
 export class KeyonicService {
   constructor(
     private toastController: ToastController,
-    private storage: Storage
+    private storage: Storage,
+    private file: File
   ) {}
 
   public generatePassword() {
@@ -64,5 +66,10 @@ export class KeyonicService {
       this.createLabel(label);
     }
     return labels;
+  }
+
+  public openFile(path: string) {
+    //TODO
+    console.log(path);
   }
 }
