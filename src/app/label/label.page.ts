@@ -57,10 +57,10 @@ export class LabelPage implements OnInit {
 
   protected searchEntry(event: Event) {
     const query = (event as CustomEvent).detail.value.toLowerCase();
-    this.displayedPasswords = this.passwords.filter((e) =>
-      this.label !== 'All'
-        ? e.label === this.label
-        : e.label != '' && e.title.toLowerCase().indexOf(query) > -1
+    this.displayedPasswords = this.passwords.filter(
+      (e) =>
+        (this.label !== 'All' ? e.label.includes(this.label) : true) &&
+        e.title.toLowerCase().indexOf(query) > -1
     );
   }
 }

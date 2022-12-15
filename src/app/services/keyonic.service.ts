@@ -57,7 +57,7 @@ export class KeyonicService {
 
   public getPasswords(filter: string) {
     return (temp.passwords as Password[]).filter((e) =>
-      filter !== 'All' ? e.label === filter : e.label != ''
+      filter !== 'All' ? e.label.includes(filter) : true
     );
   }
 

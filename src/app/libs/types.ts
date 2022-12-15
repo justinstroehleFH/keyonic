@@ -4,7 +4,7 @@ export type Password = {
   username: string;
   password: string;
   url: string;
-  label: string;
+  label: string[];
 };
 
 export type Label = {
