@@ -23,7 +23,7 @@
     </ion-item>
     <ion-item lines="inset">
       <ion-label position="floating">Label</ion-label>
-      <ion-select placeholder="Select label">
+      <ion-select placeholder="Select label" [multiple]="true">
         <ion-select-option *ngFor="let option of labels" [value]="option"
           >{{ option }}</ion-select-option
         >

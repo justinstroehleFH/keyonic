@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { Password } from '../libs/types';
+import { KeyonicService } from '../services/keyonic.service';
 
 @Component({
   selector: 'app-label',
@@ -12,49 +13,22 @@ export class LabelPage implements OnInit {
   protected selected!: any;
   protected selectedIndex!: number;
 
-  protected passwordArray = [
-    {
-      id: '1',
-      title: 'FHV',
-      username: 'nto69',
-      password: '1234',
-      url: 'www.ilias/fhv.at',
-      label: 'Uni',
-    },
-    {
-      id: '2',
-      title: 'ZARA',
-      username: 'Shopper3000',
-      password: 'z12z',
-      url: 'www.zara.at',
-      label: 'Shopping',
-    },
-    {
-      id: '3',
-      title: 'GIT',
-      username: 'gitlover420',
-      password: 'git4ever',
-      url: 'www.github.com',
-      label: 'Work',
-    },
-    {
-      id: '4',
-      title: 'ProTask',
-      username: 'PT_JST',
-      password: 'proNeverGonnaDie',
-      url: 'www.protask.eu',
-      label: 'Work',
-    },
-  ];
+  protected passwords!: Password[];
+  protected displayedPasswords!: Password[];
 
-  protected displayPasswords: any = [];
-  constructor(private activatedRoute: ActivatedRoute, private toastController: ToastController) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private keyonicService: KeyonicService
+  ) {}
 
   ngOnInit() {
     this.label = this.activatedRoute.snapshot.paramMap.get('id') as string;
-    this.displayPasswords = this.passwordArray.filter((e) =>
-      this.label !== 'All' ? e.label === this.label : e.label != ''
-    );
+    this.passwords = this.keyonicService.getPasswords(this.label);
+    this.displayedPasswords = this.passwords;
+  }
+
+  protected createEntry() {
+    //TODO
   }
 
   protected select(entry: any, index: number) {
@@ -67,30 +41,14 @@ export class LabelPage implements OnInit {
     console.log('TODO POPOVER');
   }
 
-   protected async copyUsername() {
+  protected async copyUsername() {
     navigator.clipboard.writeText(this.selected.username);
-
-    const toast = await this.toastController.create({
-      message: 'Username Copied!',
-      duration: 1500,
-      position: 'top'
-    });
-
-    await toast.present();
+    this.keyonicService.showToast('Username copied!', 1500, 'top');
   }
-
 
   protected async copyPassword() {
     navigator.clipboard.writeText(this.selected.password);
-
-    const toast = await this.toastController.create({
-      message: 'Password Copied!',
-      duration: 1500,
-      position: 'top'
-    });
-
-    await toast.present();
-
+    this.keyonicService.showToast('Password copied!', 1500, 'top');
   }
 
   protected openURL() {
@@ -99,7 +57,7 @@ export class LabelPage implements OnInit {
 
   protected searchEntry(event: Event) {
     const query = (event as CustomEvent).detail.value.toLowerCase();
-    this.displayPasswords = this.passwordArray.filter((e) =>
+    this.displayedPasswords = this.passwords.filter((e) =>
       this.label !== 'All'
         ? e.label === this.label
         : e.label != '' && e.title.toLowerCase().indexOf(query) > -1

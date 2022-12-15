@@ -1,33 +1,57 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { IonModal } from '@ionic/angular';
+import { Label, LabelURL } from './libs/types';
+import { KeyonicService } from './services/keyonic.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  public labels = [
-    { labelName: 'All', icon: 'finger-print' },
-    { labelName: 'Work', icon: 'business' },
-    { labelName: 'Uni', icon: 'school' },
-    { labelName: 'Shopping', icon: 'bag' },
-  ];
+  public icons = ['beer', 'chatbubbles', 'earth', 'rocket']; //TODO from file
+  @ViewChild(IonModal)
+  modal!: IonModal;
 
-  public displayLabels = this.labels.map((label) => {
-    return {
-      title: label.labelName,
-      url: `/label/${label.labelName}`,
-      icon: label.icon,
-    };
-  });
+  // protected displayLabels!: [{ labelName: string; url: string; icon: string }];
+  protected labels!: LabelURL[];
 
-  // TODO Icons adden ??
-  /*   public appPages = [
-    { title: 'All', url: '/label/all', icon: 'mail' },
-    { title: 'Work', url: '/label/Outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/label/Favorites', icon: 'heart' },
-    { title: 'Archived', url: '/label/Archived', icon: 'archive' },
-    { title: 'Trash', url: '/label/Trash', icon: 'trash' },
-    { title: 'Spam', url: '/label/Spam', icon: 'warning' },
-  ]; */
-  constructor() {}
+  protected label: LabelURL = {
+    labelName: '',
+    url: '',
+    icon: '',
+  };
+
+  constructor(private keyonicService: KeyonicService) {}
+
+  async ngOnInit() {
+    await this.keyonicService.createStorage();
+    let tempLabels: Label[] = await this.keyonicService.getLabels();
+    this.labels = tempLabels.map((label) => {
+      return {
+        labelName: label.labelName,
+        url: `/label/${label.labelName}`,
+        icon: label.icon,
+      };
+    });
+  }
+
+  protected onWillDismiss(event: Event) {
+    console.log(event);
+  }
+
+  protected async cancelLabel() {
+    await this.modal.dismiss(null, 'cancel');
+    this.label.labelName = '';
+  }
+
+  protected async saveLabel() {
+    await this.modal.dismiss(this.label, 'confirm');
+    this.keyonicService.createLabel(this.label);
+    this.label.url = `/label/${this.label.labelName}`;
+    this.labels.push(this.label);
+  }
+
+  protected selectIcon(event: Event) {
+    this.label.icon = (event as CustomEvent).detail.value;
+  }
 }

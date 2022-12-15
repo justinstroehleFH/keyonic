@@ -5,15 +5,58 @@
         <ion-list id="label-list">
           <ion-list-header>
             <ion-label>KEYONIC</ion-label>
-            <ion-button
-
+            <ion-button id="open-label-modal"
               ><ion-icon slot="icon-only" name="add-outline"></ion-icon
             ></ion-button>
+            <ion-modal
+              trigger="open-label-modal"
+              (willDissmiss)="onWillDismiss($event)"
+            >
+              <ng-template>
+                <ion-header>
+                  <ion-toolbar>
+                    <ion-title>New Label</ion-title>
+                    <ion-buttons slot="end">
+                      <ion-button (click)="cancelLabel()" color="danger"
+                        >Cancel</ion-button
+                      >
+                      <ion-button (click)="saveLabel()" color="success"
+                        >Save</ion-button
+                      >
+                    </ion-buttons>
+                  </ion-toolbar>
+                </ion-header>
+                <ion-content class="ion-padding">
+                  <p>Labels are used to group the password entries.</p>
+                  <ion-item lines="inset">
+                    <ion-label position="floating">Name</ion-label>
+                    <ion-input
+                      placeholder="Name"
+                      type="text"
+                      [(ngModel)]="label.labelName"
+                    ></ion-input>
+                  </ion-item>
+                  <ion-item lines="inset">
+                    <ion-label position="floating">Icon</ion-label>
+                    <ion-select
+                      okText="Select"
+                      (ionChange)="selectIcon($event)"
+                    >
+                      <ion-select-option
+                        *ngFor="let icon of icons"
+                        [value]="icon"
+                        >{{ icon }}
+                      </ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-content>
+              </ng-template>
+            </ion-modal>
           </ion-list-header>
           <ion-note>Donations for Justin Ströhle email:justin.ströhle@students.fhv.at</ion-note>
           <ion-menu-toggle
             auto-hide="false"
-            *ngFor="let p of displayLabels; let i = index"
+            *ngFor="let p of labels; let i = index"
           >
             <ion-item
               routerDirection="root"
@@ -27,7 +70,7 @@
                 [ios]="p.icon + '-outline'"
                 [md]="p.icon + '-sharp'"
               ></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
+              <ion-label>{{ p.labelName }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
