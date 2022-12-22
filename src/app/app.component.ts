@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
 import { Label, LabelURL } from './libs/types';
 import { KeyonicService } from './services/keyonic.service';
@@ -7,12 +7,11 @@ import { KeyonicService } from './services/keyonic.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   public icons = ['beer', 'chatbubbles', 'earth', 'rocket']; //TODO from file
   @ViewChild(IonModal)
   modal!: IonModal;
 
-  // protected displayLabels!: [{ labelName: string; url: string; icon: string }];
   protected labels!: LabelURL[];
 
   protected label: LabelURL = {
@@ -24,6 +23,7 @@ export class AppComponent {
   constructor(private keyonicService: KeyonicService) {}
 
   async ngOnInit() {
+    this.keyonicService.init();
     await this.keyonicService.createStorage();
     let tempLabels: Label[] = await this.keyonicService.getLabels();
     this.labels = tempLabels.map((label) => {
@@ -45,10 +45,10 @@ export class AppComponent {
   }
 
   protected async saveLabel() {
-    await this.modal.dismiss(this.label, 'confirm');
     this.keyonicService.createLabel(this.label);
     this.label.url = `/label/${this.label.labelName}`;
     this.labels.push(this.label);
+    await this.modal.dismiss(this.label, 'confirm');
   }
 
   protected selectIcon(event: Event) {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Password } from '../libs/types';
 import { KeyonicService } from '../services/keyonic.service';
 
@@ -18,17 +18,13 @@ export class LabelPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private keyonicService: KeyonicService
-  ) {}
+    private keyonicService: KeyonicService,
+    ) {}
 
-  ngOnInit() {
+    ngOnInit() {
     this.label = this.activatedRoute.snapshot.paramMap.get('id') as string;
-    this.passwords = this.keyonicService.getPasswords(this.label);
+    this.passwords = this.keyonicService.getPasswordsByLabel(this.label);
     this.displayedPasswords = this.passwords;
-  }
-
-  protected createEntry() {
-    //TODO
   }
 
   protected select(entry: any, index: number) {
@@ -63,4 +59,5 @@ export class LabelPage implements OnInit {
         e.title.toLowerCase().indexOf(query) > -1
     );
   }
+
 }

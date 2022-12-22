@@ -16,51 +16,68 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item lines="inset">
-      <ion-label position="floating">Title</ion-label>
-      <ion-input placeholder="Title"></ion-input>
-    </ion-item>
-    <ion-item lines="inset">
-      <ion-label position="floating">Label</ion-label>
-      <ion-select placeholder="Select label" [multiple]="true">
-        <ion-select-option *ngFor="let option of labels" [value]="option"
-          >{{ option }}</ion-select-option
-        >
-      </ion-select>
-    </ion-item>
-    <ion-item lines="inset">
-      <ion-label position="floating">Username</ion-label>
-      <ion-input placeholder="Username"></ion-input>
-    </ion-item>
-    <ion-item
-      counter="true"
-      [counterFormatter]="counterFormatter"
-      lines="inset"
-    >
-      <ion-label position="floating">Password</ion-label>
-      <ion-input
-        maxlength="255"
-        placeholder="Password"
-        [type]="show ? 'text' : 'password'"
-      ></ion-input>
-    </ion-item>
-    <ion-item
-      lines="inset"
-      counter="true"
-      [counterFormatter]="counterFormatter"
-      [disabled]="show"
-    >
-      <ion-label position="floating">Repeat</ion-label>
-      <ion-input
-        maxlength="255"
-        placeholder="Repeat"
-        type="password"
-      ></ion-input>
-    </ion-item>
-    <ion-item lines="inset">
-      <ion-label position="floating">URL</ion-label>
-      <ion-input placeholder="URL" type="url"></ion-input>
-    </ion-item>
+  <ion-list >
+    <form [formGroup]="detailForm" >
+      <ion-item lines="inset">
+        <ion-label position="floating">Title</ion-label>
+        <ion-input formControlName="title" placeholder="Title"></ion-input>
+      </ion-item>
+      <ion-item lines="inset">
+        <ion-label position="floating">Label</ion-label>
+        <ion-select placeholder="Select label" [multiple]="true" formControlName="label">
+          <ion-select-option *ngFor="let option of labels" [value]="option"
+            >{{ option }}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+      <ion-item lines="inset">
+        <ion-label position="floating">Username</ion-label>
+        <ion-input formControlName="username" placeholder="Username"></ion-input>
+      </ion-item>
+      <ion-item
+        counter="true"
+        [counterFormatter]="counterFormatter"
+        lines="inset"
+      >
+        <ion-label position="floating">Password</ion-label>
+        <ion-input
+          formControlName="password"
+          maxlength="255"
+          placeholder="Password"
+          [type]="show ? 'text' : 'password'"
+        ></ion-input>
+      </ion-item>
+      <ion-item
+        lines="inset"
+        counter="true"
+        [counterFormatter]="counterFormatter"
+        [disabled]="show"
+      >
+        <ion-label position="floating">Repeat</ion-label>
+        <ion-input
+          formControlName="repeat"
+          maxlength="255"
+          placeholder="Repeat"
+          type="password"
+        ></ion-input>
+      </ion-item>
+      <ion-item lines="inset">
+        <ion-label position="floating">URL</ion-label>
+        <ion-input
+        formControlName="url"
+        placeholder="URL" type="url"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-buttons slot="end">
+              <ion-button (click)="cancel()" color="danger"
+                >Cancel</ion-button
+              >
+              <ion-button (click)="save()" color="success"
+                >Save</ion-button
+              >
+            </ion-buttons>
+      </ion-item>
+    </form>
   </ion-list>
 </ion-content>
+

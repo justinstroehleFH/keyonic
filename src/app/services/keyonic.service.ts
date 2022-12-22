@@ -1,19 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { File } from '@awesome-cordova-plugins/file/ngx';
 import { Label, Password } from '../libs/types';
+import { FormGroup } from '@angular/forms';
 const temp = require('../../assets/temp.json');
 
 @Injectable({
   providedIn: 'root',
 })
 export class KeyonicService {
+
+  private passwords: Password[]= [];
   constructor(
     private toastController: ToastController,
     private storage: Storage,
     private file: File
   ) {}
+
+
+  public init(){
+    this.passwords = temp.passwords as Password[];
+  }
 
   public generatePassword() {
     const base =
@@ -45,6 +53,7 @@ export class KeyonicService {
   }
 
   public async createStorage() {
+
     await this.storage.create();
   }
 
@@ -55,13 +64,36 @@ export class KeyonicService {
     console.log(path);
   }
 
-  public getPasswords(filter: string) {
-    return (temp.passwords as Password[]).filter((e) =>
+  public getPasswordsByLabel(filter: string):Password[]  {
+    return this.passwords.filter((e) =>
       filter !== 'All' ? e.label.includes(filter) : true
     );
   }
 
+  public getPasswordsById(id: string): Password | undefined {
+    return this.passwords.find((e) => e.id === id)
+
+  }
+
   public getLabels(): Label[] {
     return temp.labels as Label[];
+  }
+
+  async saveEntry(password: Password) {
+    // TODO Save
+
+    this.passwords.push(password);
+    // const filename = localStorage.getItem("filename");
+   /*  this.file.checkDir(this.file.dataDirectory, 'mydir').then(_ => console.log('Directory exists')).catch(err =>
+      console.log('Directory doesnt exist'));
+
+      const filename = 'passwords';
+      const path ='./';
+    if(filename){
+      console.log(this.file)
+      await this.file.writeFile(this.file.dataDirectory, filename, JSON.stringify(password), {replace:true});
+      const test = await this.file.readAsText(this.file.dataDirectory,filename);
+      console.log(test);
+    } */
   }
 }

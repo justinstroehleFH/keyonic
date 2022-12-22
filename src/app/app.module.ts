@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +18,7 @@ import { File } from '@awesome-cordova-plugins/file/ngx';
     IonicModule.forRoot(),
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicStorageModule.forRoot(),
   ],
   providers: [
