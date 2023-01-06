@@ -52,7 +52,9 @@ export class LabelPage implements OnInit {
   }
 
   protected openURL() {
-    window.open(this.selected.url);
+    // window.open(this.selected.url);
+    console.log('OPENURL');
+    this.keyonicService.hashPassword();
   }
 
   protected searchEntry(event: Event) {
