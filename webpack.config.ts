@@ -1,9 +1,12 @@
+console.log('The custom config is used');
 const webpack = require('webpack');
+const path = require('path');
 module.exports = {
+  // entry: path.resolve('src/main.ts'),
   mode: 'development',
-  target: 'node18.12', //electron-main or web
+  target: 'electron-main', //electron-main or web
   node: {
-    __dirname: true,
+    __dirname: false,
   },
   module: {
     rules: [
@@ -17,4 +20,10 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      __dirname: false,
+    }),
+  ],
+  resolve: {},
 };
