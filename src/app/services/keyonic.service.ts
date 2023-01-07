@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage-angular';
 import { File } from '@awesome-cordova-plugins/file/ngx';
 import { Label, Password } from '../libs/types';
 const temp = require('../../assets/temp.json');
-// const cryptonic = require('../../../build/Release/cryptonic.node');
+const cryptonic = require('../../../build/Release/cryptonic.node');
 
 @Injectable({
   providedIn: 'root',

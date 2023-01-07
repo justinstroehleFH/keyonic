@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 module.exports = {
   mode: 'development',
-  target: 'electron-main', //electron-main or web
+  target: 'node18.12', //electron-main or web
   node: {
     __dirname: true,
   },
