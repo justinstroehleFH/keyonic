@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage-angular';
 import { File } from '@awesome-cordova-plugins/file/ngx';
 import { Label, Password } from '../libs/types';
 const temp = require('../../assets/temp.json');
-// const cryptonic = require('../../../build/Release/cryptonic.node');
+import * as cryptonic from 'cryptonic';
 
 @Injectable({
   providedIn: 'root',
@@ -67,10 +67,7 @@ export class KeyonicService {
   }
 
   public hashPassword() {
-    console.log('HASH');
-    // console.log(cryptonic);
-    // cryptonic.hash(3, 5);
-    // console.log(__dirname);
-    console.log(process);
+    console.log(cryptonic.encrypt('password'));
+    console.log(cryptonic.decrypt('cGFzc3dvcmQ='));
   }
 }

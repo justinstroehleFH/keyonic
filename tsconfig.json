@@ -21,7 +21,8 @@
     "lib": ["es2018", "dom"],
     "useDefineForClassFields": false,
     "resolveJsonModule": true,
-    "types": ["node"]
+    "types": ["node"],
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
