@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage-angular';
 import { File } from '@awesome-cordova-plugins/file/ngx';
 import { Label, Password } from '../libs/types';
 const temp = require('../../assets/temp.json');
+import cryptonic from 'cryptonic';
 
 @Injectable({
   providedIn: 'root',
@@ -142,5 +143,10 @@ export class KeyonicService implements OnInit {
     this.storage.set('passwords', password).then(() => {
       this.storage.get('password').then((p) => (this.passwords = p));
     });
+  }
+
+  public hashPassword() {
+    console.log(cryptonic.encrypt('password'));
+    console.log(cryptonic.decrypt('cGFzc3dvcmQ='));
   }
 }
