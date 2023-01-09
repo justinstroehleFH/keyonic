@@ -7,7 +7,7 @@ import { KeyonicService } from './services/keyonic.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   public icons = ['beer', 'chatbubbles', 'earth', 'rocket']; //TODO from file
   @ViewChild(IonModal)
   modal!: IonModal;
@@ -23,9 +23,11 @@ export class AppComponent implements OnInit{
   constructor(private keyonicService: KeyonicService) {}
 
   async ngOnInit() {
-    this.keyonicService.init();
     await this.keyonicService.createStorage();
-    let tempLabels: Label[] = await this.keyonicService.getLabels();
+    this.initLabels();
+  }
+  initLabels() {
+    const tempLabels: Label[] = this.keyonicService.getLabels();
     this.labels = tempLabels.map((label) => {
       return {
         labelName: label.labelName,
@@ -45,9 +47,8 @@ export class AppComponent implements OnInit{
   }
 
   protected async saveLabel() {
-    this.keyonicService.createLabel(this.label);
-    this.label.url = `/label/${this.label.labelName}`;
-    this.labels.push(this.label);
+    await this.keyonicService.createLabel(this.label);
+    this.initLabels();
     await this.modal.dismiss(this.label, 'confirm');
   }
 

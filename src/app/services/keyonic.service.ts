@@ -3,24 +3,26 @@ import { ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { File } from '@awesome-cordova-plugins/file/ngx';
 import { Label, Password } from '../libs/types';
-import { FormGroup } from '@angular/forms';
 const temp = require('../../assets/temp.json');
 
 @Injectable({
   providedIn: 'root',
 })
-export class KeyonicService {
-
-  private passwords: Password[]= [];
+export class KeyonicService implements OnInit {
+  private passwords: Password[] = [];
+  private labels: Label[] = [];
   constructor(
     private toastController: ToastController,
-    private storage: Storage,
-    private file: File
+    private storage: Storage
   ) {}
 
+  ngOnInit(): void {
+    this.createStorage();
+  }
 
-  public init(){
+  public init() {
     this.passwords = temp.passwords as Password[];
+    this.labels = temp.labels as Label[];
   }
 
   public generatePassword() {
@@ -53,47 +55,92 @@ export class KeyonicService {
   }
 
   public async createStorage() {
-
     await this.storage.create();
+    const labels = [
+      {
+        labelName: 'All',
+        icon: 'finger-print',
+      },
+      {
+        labelName: 'Shopping',
+        icon: 'cart',
+      },
+      {
+        labelName: 'Work',
+        icon: 'business',
+      },
+      {
+        labelName: 'Uni',
+        icon: 'school',
+      },
+    ];
+    const passwords = [
+      {
+        id: '31',
+        title: 'FHV',
+        username: 'nto69',
+        password: '1234',
+        url: 'www.ilias/fhv.at',
+        label: ['Uni'],
+      },
+      {
+        id: '2',
+        title: 'ZARA',
+        username: 'Shopper3000',
+        password: 'z12z',
+        url: 'www.zara.at',
+        label: ['Shopping'],
+      },
+      {
+        id: '3',
+        title: 'GIT',
+        username: 'gitlover420',
+        password: 'git4ever',
+        url: 'www.github.com',
+        label: ['Work', 'Uni'],
+      },
+      {
+        id: '4',
+        title: 'ProTask',
+        username: 'PT_JST',
+        password: 'proNeverGonnaDie',
+        url: 'www.protask.eu',
+        label: ['Work'],
+      },
+    ];
+    this.labels = labels;
+    this.passwords = passwords;
+
+    this.storage.set('labels', labels);
+    this.storage.set('passwords', passwords);
   }
 
-  public async createLabel(label: Label) {}
-
-  public openFile(path: string) {
-    //TODO
-    console.log(path);
+  public async createLabel(label: Label) {
+    this.labels.push(label);
+    console.log(this.labels);
+    this.storage.set('labels', this.labels).then(() => {
+      this.storage.get('labels').then((l) => (this.labels = l));
+    });
   }
 
-  public getPasswordsByLabel(filter: string):Password[]  {
+  public getPasswordsByLabel(filter: string): Password[] {
     return this.passwords.filter((e) =>
       filter !== 'All' ? e.label.includes(filter) : true
     );
   }
 
   public getPasswordsById(id: string): Password | undefined {
-    return this.passwords.find((e) => e.id === id)
-
+    return this.passwords.find((e) => e.id === id);
   }
 
   public getLabels(): Label[] {
-    return temp.labels as Label[];
+    return this.labels;
   }
 
   async saveEntry(password: Password) {
-    // TODO Save
-
     this.passwords.push(password);
-    // const filename = localStorage.getItem("filename");
-   /*  this.file.checkDir(this.file.dataDirectory, 'mydir').then(_ => console.log('Directory exists')).catch(err =>
-      console.log('Directory doesnt exist'));
-
-      const filename = 'passwords';
-      const path ='./';
-    if(filename){
-      console.log(this.file)
-      await this.file.writeFile(this.file.dataDirectory, filename, JSON.stringify(password), {replace:true});
-      const test = await this.file.readAsText(this.file.dataDirectory,filename);
-      console.log(test);
-    } */
+    this.storage.set('passwords', password).then(() => {
+      this.storage.get('password').then((p) => (this.passwords = p));
+    });
   }
 }
