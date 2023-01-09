@@ -1,9 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
-import { File } from '@awesome-cordova-plugins/file/ngx';
 import { Label, Password } from '../libs/types';
-const temp = require('../../assets/temp.json');
 import cryptonic from 'cryptonic';
 
 @Injectable({
@@ -19,11 +17,6 @@ export class KeyonicService implements OnInit {
 
   ngOnInit(): void {
     this.createStorage();
-  }
-
-  public init() {
-    this.passwords = temp.passwords as Password[];
-    this.labels = temp.labels as Label[];
   }
 
   public generatePassword() {
