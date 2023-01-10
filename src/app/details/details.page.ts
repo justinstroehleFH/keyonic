@@ -58,7 +58,7 @@ export class DetailsPage implements OnInit {
     if (this.entry) {
       title = this.entry.title;
       username = this.entry.username;
-      password = this.entry.password;
+      password = this.keyonicService.decryptPassword(this.entry.password);
       url = this.entry.url;
       label = this.entry.label;
     }
@@ -70,7 +70,7 @@ export class DetailsPage implements OnInit {
         label: [label, [Validators.required]],
         password: [password, [Validators.required]],
         repeat: [password, [Validators.required]],
-        url: [url, [Validators.required]],
+        url: [url],
       },
       {
         validators: DetailsPage.matchPassword,
@@ -119,7 +119,9 @@ export class DetailsPage implements OnInit {
       id: this.entry.id,
       label: this.detailForm.get(['label'])?.value,
       username: this.detailForm.get(['username'])?.value,
-      password: this.detailForm.get(['password'])?.value,
+      password: this.keyonicService.encryptPassword(
+        this.detailForm.get(['password'])?.value
+      ),
       url: this.detailForm.get(['url'])?.value,
       title: this.detailForm.get(['title'])?.value,
     };

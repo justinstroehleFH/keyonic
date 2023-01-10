@@ -18,10 +18,10 @@ export class LabelPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private keyonicService: KeyonicService,
-    ) {}
+    private keyonicService: KeyonicService
+  ) {}
 
-    ngOnInit() {
+  ngOnInit() {
     this.label = this.activatedRoute.snapshot.paramMap.get('id') as string;
     this.passwords = this.keyonicService.getPasswordsByLabel(this.label);
     this.displayedPasswords = this.passwords;
@@ -43,19 +43,14 @@ export class LabelPage implements OnInit {
   }
 
   protected async copyPassword() {
-    navigator.clipboard.writeText(this.selected.password);
+    navigator.clipboard.writeText(
+      this.keyonicService.decryptPassword(this.selected.password)
+    );
     this.keyonicService.showToast('Password copied!', 1500, 'top');
   }
 
   protected openURL() {
-    // window.open(this.selected.url);
-    console.log('OPENURL EY');
-    this.keyonicService.hashPassword();
-  }
-
-  protected test() {
-    console.log('OPENURL EY');
-    this.keyonicService.hashPassword();
+    window.open(this.selected.url);
   }
 
   protected searchEntry(event: Event) {
@@ -66,5 +61,4 @@ export class LabelPage implements OnInit {
         e.title.toLowerCase().indexOf(query) > -1
     );
   }
-
 }
