@@ -43,19 +43,14 @@ export class LabelPage implements OnInit {
   }
 
   protected async copyPassword() {
-    navigator.clipboard.writeText(this.selected.password);
+    navigator.clipboard.writeText(
+      this.keyonicService.decryptPassword(this.selected.password)
+    );
     this.keyonicService.showToast('Password copied!', 1500, 'top');
   }
 
   protected openURL() {
-    // window.open(this.selected.url);
-    console.log('OPENURL EY');
-    this.keyonicService.hashPassword();
-  }
-
-  protected test() {
-    console.log('OPENURL EY');
-    this.keyonicService.hashPassword();
+    window.open(this.selected.url);
   }
 
   protected searchEntry(event: Event) {

@@ -70,10 +70,10 @@ export class KeyonicService implements OnInit {
     ];
     const passwords = [
       {
-        id: '31',
+        id: '1',
         title: 'FHV',
         username: 'nto69',
-        password: '1234',
+        password: 'MTIzNA==',
         url: 'www.ilias/fhv.at',
         label: ['Uni'],
       },
@@ -81,7 +81,7 @@ export class KeyonicService implements OnInit {
         id: '2',
         title: 'ZARA',
         username: 'Shopper3000',
-        password: 'z12z',
+        password: 'ejEyeg==',
         url: 'www.zara.at',
         label: ['Shopping'],
       },
@@ -89,7 +89,7 @@ export class KeyonicService implements OnInit {
         id: '3',
         title: 'GIT',
         username: 'gitlover420',
-        password: 'git4ever',
+        password: 'Z2l0NGV2ZXI=',
         url: 'www.github.com',
         label: ['Work', 'Uni'],
       },
@@ -97,7 +97,7 @@ export class KeyonicService implements OnInit {
         id: '4',
         title: 'ProTask',
         username: 'PT_JST',
-        password: 'proNeverGonnaDie',
+        password: 'cHJvTmV2ZXJHb25uYURpZQ==',
         url: 'www.protask.eu',
         label: ['Work'],
       },
@@ -130,13 +130,17 @@ export class KeyonicService implements OnInit {
   }
 
   async saveEntry(password: Password) {
+    console.log(password);
     this.passwords.push(password);
     await this.storage.set('passwords', this.passwords);
   }
 
-  public hashPassword() {
-    console.log(cryptonic.encrypt('password'));
-    console.log(cryptonic.decrypt('cGFzc3dvcmQ='));
+  public encryptPassword(password: string): string {
+    return cryptonic.encrypt(password);
+  }
+
+  public decryptPassword(hash: string): string {
+    return cryptonic.decrypt(hash);
   }
 
   async updateEntry(password: Password) {
