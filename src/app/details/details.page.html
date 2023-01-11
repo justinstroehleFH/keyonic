@@ -16,15 +16,19 @@
 </ion-header>
 
 <ion-content>
-  <ion-list >
-    <form [formGroup]="detailForm" >
+  <ion-list>
+    <form [formGroup]="detailForm">
       <ion-item lines="inset">
         <ion-label position="floating">Title</ion-label>
         <ion-input formControlName="title" placeholder="Title"></ion-input>
       </ion-item>
       <ion-item lines="inset">
         <ion-label position="floating">Label</ion-label>
-        <ion-select placeholder="Select label" [multiple]="true" formControlName="label">
+        <ion-select
+          placeholder="Select label"
+          [multiple]="true"
+          formControlName="label"
+        >
           <ion-select-option *ngFor="let option of labels" [value]="option"
             >{{ option }}</ion-select-option
           >
@@ -32,7 +36,10 @@
       </ion-item>
       <ion-item lines="inset">
         <ion-label position="floating">Username</ion-label>
-        <ion-input formControlName="username" placeholder="Username"></ion-input>
+        <ion-input
+          formControlName="username"
+          placeholder="Username"
+        ></ion-input>
       </ion-item>
       <ion-item
         counter="true"
@@ -64,20 +71,20 @@
       <ion-item lines="inset">
         <ion-label position="floating">URL</ion-label>
         <ion-input
-        formControlName="url"
-        placeholder="URL" type="url"></ion-input>
+          formControlName="url"
+          placeholder="URL"
+          type="url"
+        ></ion-input>
       </ion-item>
       <ion-item>
-          <ion-buttons slot="end">
-              <ion-button (click)="cancel()" color="danger"
-                >Cancel</ion-button
-              >
-              <ion-button (click)="save()" color="success"
-                >Save</ion-button
-              >
-            </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button (click)="cancel()" color="danger">Cancel</ion-button>
+          <ion-button (click)="save()" color="success"
+            ><ng-container *ngIf="newEntry">Save</ng-container>
+            <ng-container *ngIf="!newEntry">Update</ng-container>
+          </ion-button>
+        </ion-buttons>
       </ion-item>
     </form>
   </ion-list>
 </ion-content>
-

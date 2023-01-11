@@ -8,7 +8,6 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Password } from '../libs/types';
 import { KeyonicService } from '../services/keyonic.service';
-const temp = require('../../assets/temp.json');
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
@@ -26,7 +25,7 @@ export class DetailsPage implements OnInit {
     url: '',
     username: '',
   };
-  protected labels: any[] = ['Work', 'Uni', 'Shopping'];
+  protected labels: any[] = [];
   public newEntry = true;
   public detailForm!: FormGroup;
 
@@ -126,9 +125,11 @@ export class DetailsPage implements OnInit {
     if (this.newEntry) {
       const newId = uuidv4();
       password.id = newId;
+      await this.keyonicService.saveEntry(password);
+    } else {
+      await this.keyonicService.updateEntry(password);
     }
 
-    await this.keyonicService.saveEntry(password);
     this.router.navigate(['/']);
   }
 

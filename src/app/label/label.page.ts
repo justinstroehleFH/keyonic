@@ -18,10 +18,10 @@ export class LabelPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private keyonicService: KeyonicService,
-    ) {}
+    private keyonicService: KeyonicService
+  ) {}
 
-    ngOnInit() {
+  ngOnInit() {
     this.label = this.activatedRoute.snapshot.paramMap.get('id') as string;
     this.passwords = this.keyonicService.getPasswordsByLabel(this.label);
     this.displayedPasswords = this.passwords;
@@ -66,5 +66,4 @@ export class LabelPage implements OnInit {
         e.title.toLowerCase().indexOf(query) > -1
     );
   }
-
 }

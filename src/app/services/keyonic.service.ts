@@ -104,20 +104,18 @@ export class KeyonicService implements OnInit {
     ];
     this.labels = labels;
     this.passwords = passwords;
-
     this.storage.set('labels', labels);
     this.storage.set('passwords', passwords);
   }
 
   public async createLabel(label: Label) {
     this.labels.push(label);
-    console.log(this.labels);
     this.storage.set('labels', this.labels).then(() => {
       this.storage.get('labels').then((l) => (this.labels = l));
     });
   }
 
-  public getPasswordsByLabel(filter: string): Password[] {
+  getPasswordsByLabel(filter: string): Password[] {
     return this.passwords.filter((e) =>
       filter !== 'All' ? e.label.includes(filter) : true
     );
@@ -133,13 +131,22 @@ export class KeyonicService implements OnInit {
 
   async saveEntry(password: Password) {
     this.passwords.push(password);
-    this.storage.set('passwords', password).then(() => {
-      this.storage.get('password').then((p) => (this.passwords = p));
-    });
+    await this.storage.set('passwords', this.passwords);
   }
 
   public hashPassword() {
     console.log(cryptonic.encrypt('password'));
     console.log(cryptonic.decrypt('cGFzc3dvcmQ='));
+  }
+
+  async updateEntry(password: Password) {
+    const index = this.passwords.findIndex((e) => e.id === password.id);
+    this.passwords[index].label = password.label;
+    this.passwords[index].password = password.password;
+    this.passwords[index].title = password.title;
+    this.passwords[index].url = password.url;
+    this.passwords[index].username = password.username;
+
+    const test = await this.storage.set('passwords', this.passwords);
   }
 }
