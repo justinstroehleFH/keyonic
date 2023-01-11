@@ -50,62 +50,17 @@ export class KeyonicService implements OnInit {
 
   public async createStorage() {
     await this.storage.create();
-    const labels = [
-      {
-        labelName: 'All',
-        icon: 'finger-print',
-      },
-      {
-        labelName: 'Shopping',
-        icon: 'cart',
-      },
-      {
-        labelName: 'Work',
-        icon: 'business',
-      },
-      {
-        labelName: 'Uni',
-        icon: 'school',
-      },
-    ];
-    const passwords = [
-      {
-        id: '1',
-        title: 'FHV',
-        username: 'nto69',
-        password: 'MTIzNA==',
-        url: 'www.ilias/fhv.at',
-        label: ['Uni'],
-      },
-      {
-        id: '2',
-        title: 'ZARA',
-        username: 'Shopper3000',
-        password: 'ejEyeg==',
-        url: 'www.zara.at',
-        label: ['Shopping'],
-      },
-      {
-        id: '3',
-        title: 'GIT',
-        username: 'gitlover420',
-        password: 'Z2l0NGV2ZXI=',
-        url: 'www.github.com',
-        label: ['Work', 'Uni'],
-      },
-      {
-        id: '4',
-        title: 'ProTask',
-        username: 'PT_JST',
-        password: 'cHJvTmV2ZXJHb25uYURpZQ==',
-        url: 'www.protask.eu',
-        label: ['Work'],
-      },
-    ];
-    this.labels = labels;
-    this.passwords = passwords;
-    this.storage.set('labels', labels);
-    this.storage.set('passwords', passwords);
+
+    this.labels = await this.storage.get('labels');
+    if (!this.labels) {
+      this.initLabels();
+    }
+
+    this.passwords = await this.storage.get('passwords');
+    if (!this.passwords) {
+      this.initPasswords();
+    }
+    //TODO broadcaster
   }
 
   public async createLabel(label: Label) {
@@ -152,5 +107,64 @@ export class KeyonicService implements OnInit {
     this.passwords[index].username = password.username;
 
     const test = await this.storage.set('passwords', this.passwords);
+  }
+
+  //Dummy data when empty
+  private async initLabels() {
+    const labels = [
+      {
+        labelName: 'Shopping',
+        icon: 'cart',
+      },
+      {
+        labelName: 'Work',
+        icon: 'business',
+      },
+      {
+        labelName: 'Uni',
+        icon: 'school',
+      },
+    ];
+    this.labels = labels;
+    await this.storage.set('labels', labels);
+  }
+
+  private async initPasswords() {
+    const passwords = [
+      {
+        id: '1',
+        title: 'FHV',
+        username: 'nto69',
+        password: 'MTIzNA==',
+        url: 'www.ilias/fhv.at',
+        label: ['Uni'],
+      },
+      {
+        id: '2',
+        title: 'ZARA',
+        username: 'Shopper3000',
+        password: 'ejEyeg==',
+        url: 'www.zara.at',
+        label: ['Shopping'],
+      },
+      {
+        id: '3',
+        title: 'GIT',
+        username: 'gitlover420',
+        password: 'Z2l0NGV2ZXI=',
+        url: 'www.github.com',
+        label: ['Work', 'Uni'],
+      },
+      {
+        id: '4',
+        title: 'ProTask',
+        username: 'PT_JST',
+        password: 'cHJvTmV2ZXJHb25uYURpZQ==',
+        url: 'www.protask.eu',
+        label: ['Work'],
+      },
+    ];
+    this.passwords = passwords;
+    await this.storage.set('passwords', passwords);
   }
 }

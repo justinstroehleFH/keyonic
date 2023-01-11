@@ -45,37 +45,51 @@
                 <ion-footer>
                   <ion-toolbar>
                     <ion-buttons slot="end">
-                        <ion-button (click)="cancelLabel()" color="danger"
-                          >Cancel</ion-button
-                        >
-                        <ion-button (click)="saveLabel()" color="success"
-                          >Save</ion-button
-                        >
-                      </ion-buttons>
+                      <ion-button (click)="cancelLabel()" color="danger"
+                        >Cancel</ion-button
+                      >
+                      <ion-button (click)="saveLabel()" color="success"
+                        >Save</ion-button
+                      >
+                    </ion-buttons>
                   </ion-toolbar>
                 </ion-footer>
               </ng-template>
             </ion-modal>
           </ion-list-header>
           <ion-note>c:/ok1</ion-note>
-          <ion-menu-toggle
-            auto-hide="false"
-            *ngFor="let p of labels; let i = index"
-          >
+          <ion-menu-toggle auto-hide="false">
             <ion-item
               routerDirection="root"
-              [routerLink]="[p.url]"
+              routerLink="/label/All"
               lines="none"
               detail="false"
               routerLinkActive="selected"
             >
               <ion-icon
                 slot="start"
-                [ios]="p.icon + '-outline'"
-                [md]="p.icon + '-sharp'"
+                ios="finger-print-outline"
+                md="finger-print-sharp"
               ></ion-icon>
-              <ion-label>{{ p.labelName }}</ion-label>
+              <ion-label>All</ion-label>
             </ion-item>
+            <div *ngFor="let p of labels; let i = index">
+              <ion-item
+                routerDirection="root"
+                [routerLink]="[p.url]"
+                lines="none"
+                detail="false"
+                routerLinkActive="selected"
+                (contextmenu)="labelContextMenu($event, p.labelName)"
+              >
+                <ion-icon
+                  slot="start"
+                  [ios]="p.icon + '-outline'"
+                  [md]="p.icon + '-sharp'"
+                ></ion-icon>
+                <ion-label>{{ p.labelName }}</ion-label>
+              </ion-item>
+            </div>
           </ion-menu-toggle>
         </ion-list>
       </ion-content>

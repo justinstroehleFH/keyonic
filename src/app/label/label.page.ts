@@ -23,6 +23,11 @@ export class LabelPage implements OnInit {
 
   ngOnInit() {
     this.label = this.activatedRoute.snapshot.paramMap.get('id') as string;
+    //TODO ng wird nur bei update getriggert aber nicht bei einem neuen entry --> liste nicht aktualisiert
+    this.loadPasswords();
+  }
+
+  private loadPasswords() {
     this.passwords = this.keyonicService.getPasswordsByLabel(this.label);
     this.displayedPasswords = this.passwords;
   }

@@ -52,6 +52,7 @@
           maxlength="255"
           placeholder="Password"
           [type]="show ? 'text' : 'password'"
+          (focusout)="repeatPassword()"
         ></ion-input>
       </ion-item>
       <ion-item

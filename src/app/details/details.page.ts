@@ -96,18 +96,26 @@ export class DetailsPage implements OnInit {
   }
 
   protected generatePassword() {
-    navigator.clipboard.writeText(this.keyonicService.generatePassword());
-    this.keyonicService.showToast(
-      'generiertes Passwort wurde in die Zwischenablage gespeichert',
-      1500,
-      'top'
-    );
+    let generatedPassword = this.keyonicService.generatePassword();
+    this.detailForm.patchValue({
+      password: generatedPassword,
+      repeat: generatedPassword,
+    });
+  }
+
+  protected repeatPassword() {
+    if (this.show) {
+      let password = this.detailForm.get(['password'])?.value;
+      this.detailForm.patchValue({
+        repeat: password,
+      });
+    }
   }
 
   public async save() {
     if (!this.detailForm.valid) {
       this.keyonicService.showToast(
-        'Du Hurensohn füll das Formular aus. Danke',
+        'Please fill in all relevant fields!',
         1500,
         'top'
       );

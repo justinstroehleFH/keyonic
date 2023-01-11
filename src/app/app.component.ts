@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
     await this.keyonicService.createStorage();
     this.initLabels();
   }
-  initLabels() {
+  private initLabels() {
     const tempLabels: Label[] = this.keyonicService.getLabels();
     this.labels = tempLabels.map((label) => {
       return {
@@ -54,5 +54,11 @@ export class AppComponent implements OnInit {
 
   protected selectIcon(event: Event) {
     this.label.icon = (event as CustomEvent).detail.value;
+  }
+
+  protected labelContextMenu(event: Event, label: string) {
+    event.preventDefault();
+    console.log('TODO POPOVER');
+    console.log(label);
   }
 }
