@@ -4,7 +4,7 @@
 // module.exports = {
 //   // entry: path.resolve('src/main.ts'),
 //   mode: 'development',
-//   target: 'web', //electron-main or web
+//   target: 'node', //electron-main or web
 //   node: {
 //     __dirname: false,
 //   },

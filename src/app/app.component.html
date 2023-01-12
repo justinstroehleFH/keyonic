@@ -57,11 +57,11 @@
               </ng-template>
             </ion-modal>
           </ion-list-header>
-          <ion-note>c:/ok1</ion-note>
+          <ion-note>Credential manager</ion-note>
           <ion-menu-toggle auto-hide="false">
             <ion-item
               routerDirection="root"
-              routerLink="/label/All"
+              routerLink="/label/All/All"
               lines="none"
               detail="false"
               routerLinkActive="selected"
@@ -80,7 +80,7 @@
                 lines="none"
                 detail="false"
                 routerLinkActive="selected"
-                (contextmenu)="labelContextMenu($event, p.labelName)"
+                (contextmenu)="labelContextMenu($event, p.id)"
               >
                 <ion-icon
                   slot="start"

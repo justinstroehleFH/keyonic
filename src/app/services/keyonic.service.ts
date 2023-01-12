@@ -3,6 +3,7 @@ import { ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { Label, Password } from '../libs/types';
 import cryptonic from 'cryptonic';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -64,6 +65,7 @@ export class KeyonicService implements OnInit {
   }
 
   public async createLabel(label: Label) {
+    label.id = uuidv4();
     this.labels.push(label);
     this.storage.set('labels', this.labels).then(() => {
       this.storage.get('labels').then((l) => (this.labels = l));
@@ -84,9 +86,18 @@ export class KeyonicService implements OnInit {
     return this.labels;
   }
 
-  async saveEntry(password: Password) {
-    console.log(password);
+  public getLabelById(id: string | undefined): Label | undefined {
+    return this.labels.find((e) => e.id === id);
+  }
+
+  public async saveEntry(password: Password) {
     this.passwords.push(password);
+    await this.storage.set('passwords', this.passwords);
+  }
+
+  public async deleteEntry(id: string) {
+    const index = this.passwords.findIndex((e) => e.id === id);
+    this.passwords.splice(index, 1);
     await this.storage.set('passwords', this.passwords);
   }
 
@@ -106,21 +117,34 @@ export class KeyonicService implements OnInit {
     this.passwords[index].url = password.url;
     this.passwords[index].username = password.username;
 
-    const test = await this.storage.set('passwords', this.passwords);
+    await this.storage.set('passwords', this.passwords);
+  }
+
+  public editLabel(label: Label) {
+    console.log('EDIT', label);
+  }
+
+  public async deleteLabel(id: string) {
+    const index = this.labels.findIndex((e) => e.id === id);
+    this.labels.splice(index, 1);
+    await this.storage.set('labels', this.labels);
   }
 
   //Dummy data when empty
   private async initLabels() {
     const labels = [
       {
+        id: '1',
         labelName: 'Shopping',
         icon: 'cart',
       },
       {
+        id: '2',
         labelName: 'Work',
         icon: 'business',
       },
       {
+        id: '3',
         labelName: 'Uni',
         icon: 'school',
       },
@@ -135,33 +159,33 @@ export class KeyonicService implements OnInit {
         id: '1',
         title: 'FHV',
         username: 'nto69',
-        password: 'MTIzNA==',
+        password: cryptonic.encrypt('1234'),
         url: 'www.ilias/fhv.at',
-        label: ['Uni'],
+        label: ['3'],
       },
       {
         id: '2',
         title: 'ZARA',
         username: 'Shopper3000',
-        password: 'ejEyeg==',
+        password: cryptonic.encrypt('WasLacostedDieWelt'),
         url: 'www.zara.at',
-        label: ['Shopping'],
+        label: ['1'],
       },
       {
         id: '3',
         title: 'GIT',
         username: 'gitlover420',
-        password: 'Z2l0NGV2ZXI=',
+        password: cryptonic.encrypt('mainBranchAlways'),
         url: 'www.github.com',
-        label: ['Work', 'Uni'],
+        label: ['2', '1'],
       },
       {
         id: '4',
         title: 'ProTask',
         username: 'PT_JST',
-        password: 'cHJvTmV2ZXJHb25uYURpZQ==',
+        password: cryptonic.encrypt('SAP4LIFE'),
         url: 'www.protask.eu',
-        label: ['Work'],
+        label: ['2'],
       },
     ];
     this.passwords = passwords;
