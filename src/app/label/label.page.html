@@ -82,7 +82,7 @@
       (click)="select(password, i)"
       (contextmenu)="contextClick($event)"
       lines="full"
-      [color]="selectedIndex === i ? 'primary' : ''"
+      [class]="selectedIndex === i ? 'highlight' : ''"
     >
       <ion-col size="2">{{ password.title }}</ion-col>
       <ion-col>{{ password.username }}</ion-col>

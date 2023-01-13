@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonModal, PopoverController, ModalController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { PopoverController, ModalController } from '@ionic/angular';
 import { Label, LabelURL } from './libs/types';
 import { KeyonicService } from './services/keyonic.service';
 import { ContextLabelComponent } from './components/context-label/context-label.component';
@@ -10,10 +10,6 @@ import { ModalLabelComponent } from './components/modal-label/modal-label.compon
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  public icons = ['beer', 'chatbubbles', 'earth', 'rocket', 'cart'];
-  @ViewChild(IonModal)
-  modal!: IonModal;
-
   protected labels!: LabelURL[];
 
   protected label: LabelURL = {
@@ -49,19 +45,12 @@ export class AppComponent implements OnInit {
     console.log(event);
   }
 
-  protected async cancelLabel() {
-    await this.modal.dismiss(null, 'cancel');
-    this.label.labelName = '';
-  }
-
-  protected async saveLabel() {
-    await this.keyonicService.createLabel(this.label);
-    this.initLabels();
-    await this.modal.dismiss(this.label, 'confirm');
-  }
-
   protected selectIcon(event: Event) {
     this.label.icon = (event as CustomEvent).detail.value;
+  }
+
+  protected async createLabel(event: Event) {
+    this.presentModal('', 'create');
   }
 
   protected async labelContextMenu(event: Event, id: string) {
@@ -73,17 +62,23 @@ export class AppComponent implements OnInit {
     });
     await popover.present();
     const { role } = await popover.onDidDismiss();
+    if (role === 'backdrop') return;
     if (role === 'edit') {
-      const modal = await this.modalController.create({
-        component: ModalLabelComponent,
-        componentProps: { id: id, mode: 'edit' },
-      });
-      modal.present();
-      const role = await modal.onWillDismiss();
-      console.log('MODAL', role);
+      this.presentModal(id, 'edit');
     }
     if (role === 'delete') {
       this.keyonicService.deleteLabel(id);
     }
+    this.initLabels();
+  }
+  private async presentModal(id: string, mode: string) {
+    const modal = await this.modalController.create({
+      component: ModalLabelComponent,
+      componentProps: { id: id, mode: mode },
+    });
+    modal.present();
+    const { role } = await modal.onWillDismiss();
+    if (role === 'cancelled') return;
+    this.initLabels();
   }
 }

@@ -78,14 +78,11 @@ export class LabelPage implements OnInit {
 
   async presentDeleteAlert(id: string, title: string) {
     const alert = await this.alertController.create({
-      header: `Would you like to delete the entry ${title}`,
+      header: `Are you sure you want to delete the entry "${title}"?`,
       buttons: [
         {
           text: 'No',
           role: 'cancel',
-          handler: () => {
-            //TODO
-          },
         },
         {
           text: 'Yes',
@@ -97,6 +94,13 @@ export class LabelPage implements OnInit {
       ],
     });
     await alert.present();
-    await alert.onDidDismiss();
+    const { role } = await alert.onDidDismiss();
+    if (role === 'cancel') return;
+    this.keyonicService.showToast(
+      `The entry "${title}" has been deleted!`,
+      1500,
+      'top'
+    );
+    this.loadPasswords();
   }
 }

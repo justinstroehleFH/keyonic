@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Label } from 'src/app/libs/types';
 import { KeyonicService } from 'src/app/services/keyonic.service';
+import { icons } from 'src/app/libs/globals';
 
 @Component({
   selector: 'app-modal-label',
@@ -11,7 +12,7 @@ import { KeyonicService } from 'src/app/services/keyonic.service';
 export class ModalLabelComponent implements OnInit {
   @Input() id?: string;
   @Input() mode?: string;
-  public icons = ['beer', 'chatbubbles', 'earth', 'rocket', 'cart'];
+  public icons = icons;
 
   protected label: Label = {
     id: '',
@@ -33,10 +34,12 @@ export class ModalLabelComponent implements OnInit {
 
   protected cancelLabel() {
     this.modalController.dismiss(null, 'cancelled');
+    this.label.labelName = '';
+    this.label.icon = '';
   }
 
   protected saveLabel() {
-    //TODO validator und schöner machen
+    if (!this.validate()) return;
     if (this.mode === 'edit') {
       this.keyonicService.editLabel(this.label);
     } else if (this.mode === 'create') {
@@ -47,5 +50,9 @@ export class ModalLabelComponent implements OnInit {
 
   protected selectIcon(event: Event) {
     this.label.icon = (event as CustomEvent).detail.value;
+  }
+
+  private validate(): boolean {
+    return this.label.labelName !== null && this.label.icon !== null;
   }
 }

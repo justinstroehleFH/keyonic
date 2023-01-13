@@ -47,7 +47,7 @@ export class DetailsPage implements OnInit {
     this.initForms();
   }
 
-  initForms() {
+  private initForms() {
     let title = '';
     let username = '';
     let password = '';
@@ -83,7 +83,7 @@ export class DetailsPage implements OnInit {
       : { equals: true };
   }
 
-  getEntry(entryId: string) {
+  private getEntry(entryId: string) {
     const entry = this.keyonicService.getPasswordsById(entryId);
     if (entry) {
       this.entry = entry;

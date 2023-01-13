@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage-angular';
 import { Label, Password } from '../libs/types';
 import cryptonic from 'cryptonic';
 import { v4 as uuidv4 } from 'uuid';
+import { labels, passwords } from '../libs/globals';
 
 @Injectable({
   providedIn: 'root',
@@ -101,14 +102,6 @@ export class KeyonicService implements OnInit {
     await this.storage.set('passwords', this.passwords);
   }
 
-  public encryptPassword(password: string): string {
-    return cryptonic.encrypt(password);
-  }
-
-  public decryptPassword(hash: string): string {
-    return cryptonic.decrypt(hash);
-  }
-
   async updateEntry(password: Password) {
     const index = this.passwords.findIndex((e) => e.id === password.id);
     this.passwords[index].label = password.label;
@@ -120,8 +113,10 @@ export class KeyonicService implements OnInit {
     await this.storage.set('passwords', this.passwords);
   }
 
-  public editLabel(label: Label) {
-    console.log('EDIT', label);
+  public async editLabel(label: Label) {
+    const index = this.passwords.findIndex((e) => e.id === label.id);
+    this.labels[index] = label;
+    await this.storage.set('labels', this.labels);
   }
 
   public async deleteLabel(id: string) {
@@ -130,64 +125,21 @@ export class KeyonicService implements OnInit {
     await this.storage.set('labels', this.labels);
   }
 
+  public encryptPassword(password: string): string {
+    return cryptonic.encrypt(password);
+  }
+
+  public decryptPassword(hash: string): string {
+    return cryptonic.decrypt(hash);
+  }
+
   //Dummy data when empty
   private async initLabels() {
-    const labels = [
-      {
-        id: '1',
-        labelName: 'Shopping',
-        icon: 'cart',
-      },
-      {
-        id: '2',
-        labelName: 'Work',
-        icon: 'business',
-      },
-      {
-        id: '3',
-        labelName: 'Uni',
-        icon: 'school',
-      },
-    ];
     this.labels = labels;
-    await this.storage.set('labels', labels);
+    await this.storage.set('labels', this.labels);
   }
 
   private async initPasswords() {
-    const passwords = [
-      {
-        id: '1',
-        title: 'FHV',
-        username: 'nto69',
-        password: cryptonic.encrypt('1234'),
-        url: 'www.ilias/fhv.at',
-        label: ['3'],
-      },
-      {
-        id: '2',
-        title: 'ZARA',
-        username: 'Shopper3000',
-        password: cryptonic.encrypt('WasLacostedDieWelt'),
-        url: 'www.zara.at',
-        label: ['1'],
-      },
-      {
-        id: '3',
-        title: 'GIT',
-        username: 'gitlover420',
-        password: cryptonic.encrypt('mainBranchAlways'),
-        url: 'www.github.com',
-        label: ['2', '1'],
-      },
-      {
-        id: '4',
-        title: 'ProTask',
-        username: 'PT_JST',
-        password: cryptonic.encrypt('SAP4LIFE'),
-        url: 'www.protask.eu',
-        label: ['2'],
-      },
-    ];
     this.passwords = passwords;
     await this.storage.set('passwords', passwords);
   }
