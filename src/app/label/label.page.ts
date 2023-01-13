@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, PopoverController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { Password } from '../libs/types';
 import { KeyonicService } from '../services/keyonic.service';
 
@@ -29,7 +29,6 @@ export class LabelPage implements OnInit {
     this.labelName = this.activatedRoute.snapshot.paramMap.get(
       'name'
     ) as string;
-    //TODO ng wird nur bei update getriggert aber nicht bei einem neuen entry --> liste nicht aktualisiert
     this.loadPasswords();
   }
 

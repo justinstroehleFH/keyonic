@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { Password } from '../libs/types';
 import { KeyonicService } from '../services/keyonic.service';
 import { v4 as uuidv4 } from 'uuid';
@@ -33,7 +34,8 @@ export class DetailsPage implements OnInit {
     private keyonicService: KeyonicService,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
@@ -42,7 +44,6 @@ export class DetailsPage implements OnInit {
       this.getEntry(entryId);
       const labels = this.keyonicService.getLabels();
       this.labels = labels.map((l) => l.labelName);
-      this.labels.shift();
     }
     this.initForms();
   }
@@ -139,12 +140,27 @@ export class DetailsPage implements OnInit {
     } else {
       await this.keyonicService.updateEntry(password);
     }
-
+    //TODO change to previous url (label)
     this.router.navigate(['/']);
   }
 
-  cancel() {
-    // TODO save before navigate away popup
+  public async cancel() {
+    const alert = await this.alertController.create({
+      header: 'Are you sure you want cancel?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+        },
+        {
+          text: 'Yes',
+          role: 'confirm',
+        },
+      ],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    if (role === 'cancel') return;
     this.router.navigate(['/']);
   }
 }
