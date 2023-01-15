@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { Password } from '../libs/types';
+import { Label, Password } from '../libs/types';
 import { KeyonicService } from '../services/keyonic.service';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -26,7 +26,7 @@ export class DetailsPage implements OnInit {
     url: '',
     username: '',
   };
-  protected labels: any[] = [];
+  protected labels: Label[] = [];
   public newEntry = true;
   public detailForm!: FormGroup;
 
@@ -42,8 +42,8 @@ export class DetailsPage implements OnInit {
     const entryId = this.activatedRoute.snapshot.paramMap.get('hash');
     if (entryId) {
       this.getEntry(entryId);
-      const labels = this.keyonicService.getLabels();
-      this.labels = labels.map((l) => l.labelName);
+      this.labels = this.keyonicService.getLabels();
+      // this.labels = labels.map((l) => l.labelName);
     }
     this.initForms();
   }

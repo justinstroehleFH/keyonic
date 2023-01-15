@@ -29,8 +29,8 @@
           [multiple]="true"
           formControlName="label"
         >
-          <ion-select-option *ngFor="let option of labels" [value]="option"
-            >{{ option }}</ion-select-option
+          <ion-select-option *ngFor="let option of labels" [value]="option.id"
+            >{{ option.labelName }}</ion-select-option
           >
         </ion-select>
       </ion-item>
