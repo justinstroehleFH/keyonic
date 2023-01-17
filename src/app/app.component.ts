@@ -4,6 +4,8 @@ import { Label, LabelURL } from './libs/types';
 import { KeyonicService } from './services/keyonic.service';
 import { ContextLabelComponent } from './components/context-label/context-label.component';
 import { ModalLabelComponent } from './components/modal-label/modal-label.component';
+import { ObservonicService } from './services/observonic.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -22,13 +24,18 @@ export class AppComponent implements OnInit {
   constructor(
     private keyonicService: KeyonicService,
     private popoverController: PopoverController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private observonicService: ObservonicService
   ) {}
 
   async ngOnInit() {
     await this.keyonicService.createStorage();
     this.initLabels();
+    this.observonicService.passwordsChanged$.subscribe((data) => {
+      if (data) this.initLabels();
+    });
   }
+
   private initLabels() {
     const tempLabels: Label[] = this.keyonicService.getLabels();
     this.labels = tempLabels.map((label) => {

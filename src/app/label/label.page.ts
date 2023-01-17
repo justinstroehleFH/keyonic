@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Password } from '../libs/types';
 import { KeyonicService } from '../services/keyonic.service';
+import { ObservonicService } from '../services/observonic.service';
 
 @Component({
   selector: 'app-label',
@@ -21,7 +22,8 @@ export class LabelPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private keyonicService: KeyonicService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private observonicService: ObservonicService
   ) {}
 
   ngOnInit() {
@@ -30,6 +32,9 @@ export class LabelPage implements OnInit {
       'name'
     ) as string;
     this.loadPasswords();
+    this.observonicService.passwordsChanged$.subscribe((data) => {
+      if (data) this.loadPasswords();
+    });
   }
 
   private loadPasswords() {

@@ -43,7 +43,6 @@ export class DetailsPage implements OnInit {
     if (entryId) {
       this.getEntry(entryId);
       this.labels = this.keyonicService.getLabels();
-      // this.labels = labels.map((l) => l.labelName);
     }
     this.initForms();
   }
@@ -89,6 +88,8 @@ export class DetailsPage implements OnInit {
     if (entry) {
       this.entry = entry;
       this.newEntry = false;
+    } else {
+      this.newEntry = true;
     }
   }
 
@@ -140,6 +141,7 @@ export class DetailsPage implements OnInit {
     } else {
       await this.keyonicService.updateEntry(password);
     }
+    this.resetForm();
     //TODO change to previous url (label)
     this.router.navigate(['/']);
   }
@@ -162,5 +164,24 @@ export class DetailsPage implements OnInit {
     const { role } = await alert.onDidDismiss();
     if (role === 'cancel') return;
     this.router.navigate(['/']);
+  }
+
+  private resetForm() {
+    this.entry = {
+      id: '-1',
+      label: [],
+      password: '',
+      title: '',
+      url: '',
+      username: '',
+    };
+    this.detailForm.patchValue({
+      label: [],
+      password: '',
+      repeat: '',
+      title: '',
+      url: '',
+      username: '',
+    });
   }
 }

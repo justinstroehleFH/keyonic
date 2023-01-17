@@ -5,6 +5,7 @@ import { Label, Password } from '../libs/types';
 import cryptonic from 'cryptonic';
 import { v4 as uuidv4 } from 'uuid';
 import { labels, passwords } from '../libs/globals';
+import { ObservonicService } from './observonic.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +15,11 @@ export class KeyonicService implements OnInit {
   private labels: Label[] = [];
   constructor(
     private toastController: ToastController,
-    private storage: Storage
+    private storage: Storage,
+    private observonicService: ObservonicService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.createStorage();
   }
 
@@ -57,12 +59,13 @@ export class KeyonicService implements OnInit {
     if (!this.labels) {
       this.initLabels();
     }
+    this.observonicService.labelsChanged(true);
 
     this.passwords = await this.storage.get('passwords');
     if (!this.passwords) {
       this.initPasswords();
     }
-    //TODO broadcaster
+    this.observonicService.passwordsChanged(true);
   }
 
   public async createLabel(label: Label) {

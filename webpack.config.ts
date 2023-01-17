@@ -27,3 +27,4 @@
 //   ],
 //   resolve: {},
 // };
+// https://stackoverflow.com/questions/50547649/using-node-js-addons-in-electrons-renderer-with-webpack
