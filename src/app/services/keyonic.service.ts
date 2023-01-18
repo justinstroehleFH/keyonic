@@ -76,7 +76,7 @@ export class KeyonicService implements OnInit {
     });
   }
 
-  getPasswordsByLabel(filter: string): Password[] {
+  public getPasswordsByLabel(filter: string): Password[] {
     return this.passwords.filter((e) =>
       filter !== 'All' ? e.label.includes(filter) : true
     );
