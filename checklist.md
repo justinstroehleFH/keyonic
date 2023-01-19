@@ -10,5 +10,5 @@
 [x] Store encrypted password
 [x] Decrypt password when displaying
 [ ] Encryption / Decryption in C++
-[ ] UI Tests
-[ ] Unit Tests
+[X] UI Tests
+[X] Unit Tests
