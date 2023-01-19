@@ -17,7 +17,7 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./details.page.scss'],
 })
 export class DetailsPage implements OnInit {
-  protected show: boolean = false;
+  public show: boolean = false;
   private entry: Password = {
     id: '-1',
     label: [],
@@ -93,11 +93,11 @@ export class DetailsPage implements OnInit {
     }
   }
 
-  protected counterFormatter(inputLength: number, maxLength: number) {
+  public counterFormatter(inputLength: number, maxLength: number) {
     return `${inputLength} characters`;
   }
 
-  protected generatePassword() {
+  public generatePassword() {
     let generatedPassword = this.keyonicService.generatePassword();
     this.detailForm.patchValue({
       password: generatedPassword,
@@ -105,7 +105,7 @@ export class DetailsPage implements OnInit {
     });
   }
 
-  protected repeatPassword() {
+  public repeatPassword() {
     if (this.show) {
       let password = this.detailForm.get(['password'])?.value;
       this.detailForm.patchValue({

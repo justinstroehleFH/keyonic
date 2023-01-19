@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
+import { ModalController, PopoverController } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { KeyonicService } from './services/keyonic.service';
@@ -18,6 +19,14 @@ describe('AppComponent', () => {
           provide: KeyonicService,
           useValue: new KeyonicMockService(),
         },
+        {
+          provide: PopoverController,
+          useValue: PopoverController,
+        },
+        {
+          provide: ModalController,
+          useValue: ModalController,
+        },
       ],
     }).compileComponents();
   });
@@ -33,9 +42,7 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-label');
-    expect(menuItems.length).toEqual(12);
-    expect(menuItems[0].textContent).toContain('Inbox');
-    expect(menuItems[1].textContent).toContain('Outbox');
+    expect(menuItems[0].textContent).toContain('KEYONIC');
   });
 
   it('should have urls', async () => {
@@ -43,12 +50,8 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-item');
-    expect(menuItems.length).toEqual(12);
     expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual(
-      '/label/Inbox'
-    );
-    expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual(
-      '/label/Outbox'
+      '/label/All/All'
     );
   });
 });

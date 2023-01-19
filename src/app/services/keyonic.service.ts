@@ -76,12 +76,14 @@ export class KeyonicService implements OnInit {
     });
   }
 
+  //TODO rename
   public getPasswordsByLabel(filter: string): Password[] {
     return this.passwords.filter((e) =>
       filter !== 'All' ? e.label.includes(filter) : true
     );
   }
 
+  //TODO rename
   public getPasswordsById(id: string): Password | undefined {
     return this.passwords.find((e) => e.id === id);
   }

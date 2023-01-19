@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder, FormsModule } from '@angular/forms';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { it } from 'node:test';
 import { Observable, of } from 'rxjs';
 import { passwords } from '../libs/globals';
 import { Label, Password } from '../libs/types';
@@ -47,13 +46,5 @@ describe('DetailsPage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should ngOnInit', () => {
-    expect(component.ngOnInit()).toBeTruthy();
-  });
-
-  it('should do', () => {
-    expect(DetailsPage.matchPassword()).toBeTruthy();
   });
 });

@@ -31,10 +31,6 @@ module.exports = function (config) {
       reporters: [{ type: 'html' }, { type: 'text-summary' }],
     },
     reporters: ['progress', 'kjhtml', 'coverage'],
-    coverageReporter: {
-      type: 'html',
-      dir: 'coverage/',
-    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
