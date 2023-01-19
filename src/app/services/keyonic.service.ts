@@ -3,6 +3,9 @@ import { ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { Label, Password } from '../libs/types';
 import cryptonic from 'cryptonic';
+import { v4 as uuidv4 } from 'uuid';
+import { labels, passwords } from '../libs/globals';
+import { ObservonicService } from './observonic.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,10 +15,11 @@ export class KeyonicService implements OnInit {
   private labels: Label[] = [];
   constructor(
     private toastController: ToastController,
-    private storage: Storage
+    private storage: Storage,
+    private observonicService: ObservonicService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.createStorage();
   }
 
@@ -55,22 +59,24 @@ export class KeyonicService implements OnInit {
     if (!this.labels) {
       this.initLabels();
     }
+    this.observonicService.labelsChanged(true);
 
     this.passwords = await this.storage.get('passwords');
     if (!this.passwords) {
       this.initPasswords();
     }
-    //TODO broadcaster
+    this.observonicService.passwordsChanged(true);
   }
 
   public async createLabel(label: Label) {
+    label.id = uuidv4();
     this.labels.push(label);
     this.storage.set('labels', this.labels).then(() => {
       this.storage.get('labels').then((l) => (this.labels = l));
     });
   }
 
-  getPasswordsByLabel(filter: string): Password[] {
+  public getPasswordsByLabel(filter: string): Password[] {
     return this.passwords.filter((e) =>
       filter !== 'All' ? e.label.includes(filter) : true
     );
@@ -84,18 +90,19 @@ export class KeyonicService implements OnInit {
     return this.labels;
   }
 
-  async saveEntry(password: Password) {
-    console.log(password);
+  public getLabelById(id: string | undefined): Label | undefined {
+    return this.labels.find((e) => e.id === id);
+  }
+
+  public async saveEntry(password: Password) {
     this.passwords.push(password);
     await this.storage.set('passwords', this.passwords);
   }
 
-  public encryptPassword(password: string): string {
-    return cryptonic.encrypt(password);
-  }
-
-  public decryptPassword(hash: string): string {
-    return cryptonic.decrypt(hash);
+  public async deleteEntry(id: string) {
+    const index = this.passwords.findIndex((e) => e.id === id);
+    this.passwords.splice(index, 1);
+    await this.storage.set('passwords', this.passwords);
   }
 
   async updateEntry(password: Password) {
@@ -106,64 +113,36 @@ export class KeyonicService implements OnInit {
     this.passwords[index].url = password.url;
     this.passwords[index].username = password.username;
 
-    const test = await this.storage.set('passwords', this.passwords);
+    await this.storage.set('passwords', this.passwords);
+  }
+
+  public async editLabel(label: Label) {
+    const index = this.passwords.findIndex((e) => e.id === label.id);
+    this.labels[index] = label;
+    await this.storage.set('labels', this.labels);
+  }
+
+  public async deleteLabel(id: string) {
+    const index = this.labels.findIndex((e) => e.id === id);
+    this.labels.splice(index, 1);
+    await this.storage.set('labels', this.labels);
+  }
+
+  public encryptPassword(password: string): string {
+    return cryptonic.encrypt(password);
+  }
+
+  public decryptPassword(hash: string): string {
+    return cryptonic.decrypt(hash);
   }
 
   //Dummy data when empty
   private async initLabels() {
-    const labels = [
-      {
-        labelName: 'Shopping',
-        icon: 'cart',
-      },
-      {
-        labelName: 'Work',
-        icon: 'business',
-      },
-      {
-        labelName: 'Uni',
-        icon: 'school',
-      },
-    ];
     this.labels = labels;
-    await this.storage.set('labels', labels);
+    await this.storage.set('labels', this.labels);
   }
 
   private async initPasswords() {
-    const passwords = [
-      {
-        id: '1',
-        title: 'FHV',
-        username: 'nto69',
-        password: 'MTIzNA==',
-        url: 'www.ilias/fhv.at',
-        label: ['Uni'],
-      },
-      {
-        id: '2',
-        title: 'ZARA',
-        username: 'Shopper3000',
-        password: 'ejEyeg==',
-        url: 'www.zara.at',
-        label: ['Shopping'],
-      },
-      {
-        id: '3',
-        title: 'GIT',
-        username: 'gitlover420',
-        password: 'Z2l0NGV2ZXI=',
-        url: 'www.github.com',
-        label: ['Work', 'Uni'],
-      },
-      {
-        id: '4',
-        title: 'ProTask',
-        username: 'PT_JST',
-        password: 'cHJvTmV2ZXJHb25uYURpZQ==',
-        url: 'www.protask.eu',
-        label: ['Work'],
-      },
-    ];
     this.passwords = passwords;
     await this.storage.set('passwords', passwords);
   }

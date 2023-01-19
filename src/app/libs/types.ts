@@ -8,11 +8,13 @@ export type Password = {
 };
 
 export type Label = {
+  id: string;
   labelName: string;
   icon: string;
 };
 
 export type LabelURL = {
+  id: string;
   labelName: string;
   icon: string;
   url: string;

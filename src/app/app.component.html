@@ -5,63 +5,15 @@
         <ion-list id="label-list">
           <ion-list-header>
             <ion-label>KEYONIC</ion-label>
-            <ion-button id="open-label-modal"
+            <ion-button id="open-label-modal" (click)="createLabel($event)"
               ><ion-icon slot="icon-only" name="add-outline"></ion-icon
             ></ion-button>
-            <ion-modal
-              trigger="open-label-modal"
-              (willDissmiss)="onWillDismiss($event)"
-            >
-              <ng-template>
-                <ion-header>
-                  <ion-toolbar>
-                    <ion-title>New Label</ion-title>
-                  </ion-toolbar>
-                </ion-header>
-                <ion-content class="ion-padding">
-                  <p>Labels are used to group the password entries.</p>
-                  <ion-item lines="inset">
-                    <ion-label position="floating">Name</ion-label>
-                    <ion-input
-                      placeholder="Name"
-                      type="text"
-                      [(ngModel)]="label.labelName"
-                    ></ion-input>
-                  </ion-item>
-                  <ion-item lines="inset">
-                    <ion-label position="floating">Icon</ion-label>
-                    <ion-select
-                      okText="Select"
-                      (ionChange)="selectIcon($event)"
-                    >
-                      <ion-select-option
-                        *ngFor="let icon of icons"
-                        [value]="icon"
-                        >{{ icon }}
-                      </ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </ion-content>
-                <ion-footer>
-                  <ion-toolbar>
-                    <ion-buttons slot="end">
-                      <ion-button (click)="cancelLabel()" color="danger"
-                        >Cancel</ion-button
-                      >
-                      <ion-button (click)="saveLabel()" color="success"
-                        >Save</ion-button
-                      >
-                    </ion-buttons>
-                  </ion-toolbar>
-                </ion-footer>
-              </ng-template>
-            </ion-modal>
           </ion-list-header>
-          <ion-note>c:/ok1</ion-note>
+          <ion-note>Credential manager</ion-note>
           <ion-menu-toggle auto-hide="false">
             <ion-item
               routerDirection="root"
-              routerLink="/label/All"
+              routerLink="/label/All/All"
               lines="none"
               detail="false"
               routerLinkActive="selected"
@@ -80,7 +32,7 @@
                 lines="none"
                 detail="false"
                 routerLinkActive="selected"
-                (contextmenu)="labelContextMenu($event, p.labelName)"
+                (contextmenu)="labelContextMenu($event, p.id)"
               >
                 <ion-icon
                   slot="start"

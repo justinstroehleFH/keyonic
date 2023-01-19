@@ -4,11 +4,11 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'label/All',
+    redirectTo: 'label/All/All',
     pathMatch: 'full',
   },
   {
-    path: 'label/:id',
+    path: 'label/:id/:name',
     loadChildren: () =>
       import('./label/label.module').then((m) => m.LabelPageModule),
   },

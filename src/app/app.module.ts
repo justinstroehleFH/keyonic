@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -9,9 +9,11 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { IonicStorageModule } from '@ionic/storage-angular';
+import { ContextLabelComponent } from './components/context-label/context-label.component';
+import { ModalLabelComponent } from './components/modal-label/modal-label.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ContextLabelComponent, ModalLabelComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

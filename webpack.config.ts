@@ -4,7 +4,7 @@
 // module.exports = {
 //   // entry: path.resolve('src/main.ts'),
 //   mode: 'development',
-//   target: 'web', //electron-main or web
+//   target: 'node', //electron-main or web
 //   node: {
 //     __dirname: false,
 //   },
@@ -27,3 +27,4 @@
 //   ],
 //   resolve: {},
 // };
+// https://stackoverflow.com/questions/50547649/using-node-js-addons-in-electrons-renderer-with-webpack

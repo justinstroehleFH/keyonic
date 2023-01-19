@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { Password } from '../libs/types';
 import { KeyonicService } from '../services/keyonic.service';
+import { ObservonicService } from '../services/observonic.service';
 
 @Component({
   selector: 'app-label',
@@ -10,6 +12,7 @@ import { KeyonicService } from '../services/keyonic.service';
 })
 export class LabelPage implements OnInit {
   protected label!: string;
+  protected labelName!: string;
   protected selected!: any;
   protected selectedIndex!: number;
 
@@ -18,13 +21,20 @@ export class LabelPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private keyonicService: KeyonicService
+    private keyonicService: KeyonicService,
+    private alertController: AlertController,
+    private observonicService: ObservonicService
   ) {}
 
   ngOnInit() {
     this.label = this.activatedRoute.snapshot.paramMap.get('id') as string;
-    //TODO ng wird nur bei update getriggert aber nicht bei einem neuen entry --> liste nicht aktualisiert
+    this.labelName = this.activatedRoute.snapshot.paramMap.get(
+      'name'
+    ) as string;
     this.loadPasswords();
+    this.observonicService.passwordsChanged$.subscribe((data) => {
+      if (data) this.loadPasswords();
+    });
   }
 
   private loadPasswords() {
@@ -37,9 +47,8 @@ export class LabelPage implements OnInit {
     this.selectedIndex = index;
   }
 
-  protected contextClick(event: Event) {
+  protected async contextClick(event: Event) {
     event.preventDefault();
-    console.log('TODO POPOVER');
   }
 
   protected async copyUsername() {
@@ -58,6 +67,10 @@ export class LabelPage implements OnInit {
     window.open(this.selected.url);
   }
 
+  protected deleteEntry() {
+    this.presentDeleteAlert(this.selected.id, this.selected.title);
+  }
+
   protected searchEntry(event: Event) {
     const query = (event as CustomEvent).detail.value.toLowerCase();
     this.displayedPasswords = this.passwords.filter(
@@ -65,5 +78,33 @@ export class LabelPage implements OnInit {
         (this.label !== 'All' ? e.label.includes(this.label) : true) &&
         e.title.toLowerCase().indexOf(query) > -1
     );
+  }
+
+  async presentDeleteAlert(id: string, title: string) {
+    const alert = await this.alertController.create({
+      header: `Are you sure you want to delete the entry "${title}"?`,
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+        },
+        {
+          text: 'Yes',
+          role: 'confirm',
+          handler: () => {
+            this.keyonicService.deleteEntry(id);
+          },
+        },
+      ],
+    });
+    await alert.present();
+    const { role } = await alert.onDidDismiss();
+    if (role === 'cancel') return;
+    this.keyonicService.showToast(
+      `The entry "${title}" has been deleted!`,
+      1500,
+      'top'
+    );
+    this.loadPasswords();
   }
 }

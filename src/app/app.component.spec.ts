@@ -4,6 +4,8 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AppComponent } from './app.component';
+import { KeyonicService } from './services/keyonic.service';
+import { KeyonicMockService } from './services/mocks/keyonic-mock.service';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -11,6 +13,12 @@ describe('AppComponent', () => {
       declarations: [AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [RouterTestingModule.withRoutes([])],
+      providers: [
+        {
+          provide: KeyonicService,
+          useValue: new KeyonicMockService(),
+        },
+      ],
     }).compileComponents();
   });
 
