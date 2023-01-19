@@ -5,7 +5,10 @@
         <ion-list id="label-list">
           <ion-list-header>
             <ion-label>KEYONIC</ion-label>
-            <ion-button id="open-label-modal" (click)="createLabel($event)"
+            <ion-button
+              data-cy="openLabelModal"
+              id="open-label-modal"
+              (click)="createLabel($event)"
               ><ion-icon slot="icon-only" name="add-outline"></ion-icon
             ></ion-button>
           </ion-list-header>
