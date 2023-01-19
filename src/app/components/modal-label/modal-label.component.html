@@ -8,6 +8,7 @@
   <ion-item lines="inset">
     <ion-label position="floating">Name</ion-label>
     <ion-input
+      data-cy="labelNameInput"
       placeholder="Name"
       type="text"
       [(ngModel)]="label.labelName"
@@ -16,6 +17,7 @@
   <ion-item lines="inset">
     <ion-label position="floating">Icon</ion-label>
     <ion-select
+      data-cy="labelSelectorInput"
       okText="Select"
       (ionChange)="selectIcon($event)"
       [ngModel]="label.icon"
@@ -30,7 +32,9 @@
   <ion-toolbar>
     <ion-buttons slot="end">
       <ion-button (click)="cancelLabel()" color="danger">Cancel</ion-button>
-      <ion-button (click)="saveLabel()" color="success">Save</ion-button>
+      <ion-button data-cy="saveLabel" (click)="saveLabel()" color="success"
+        >Save</ion-button
+      >
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>
