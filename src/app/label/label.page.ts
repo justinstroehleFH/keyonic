@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { Password } from '../libs/types';
 import { KeyonicService } from '../services/keyonic.service';
 import { ObservonicService } from '../services/observonic.service';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 @Component({
   selector: 'app-label',
@@ -23,7 +24,8 @@ export class LabelPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private keyonicService: KeyonicService,
     private alertController: AlertController,
-    private observonicService: ObservonicService
+    private observonicService: ObservonicService,
+    private inAppBrowser: InAppBrowser
   ) {}
 
   ngOnInit() {
@@ -63,8 +65,9 @@ export class LabelPage implements OnInit {
     this.keyonicService.showToast('Password copied!', 1500, 'top');
   }
 
-  protected openURL() {
-    window.open(this.selected.url);
+  protected copyURL() {
+    navigator.clipboard.writeText(this.selected.url);
+    this.keyonicService.showToast('URL copied!', 1500, 'top');
   }
 
   protected deleteEntry() {
