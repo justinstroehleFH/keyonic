@@ -5,6 +5,7 @@ import { KeyonicService } from './services/keyonic.service';
 import { ContextLabelComponent } from './components/context-label/context-label.component';
 import { ModalLabelComponent } from './components/modal-label/modal-label.component';
 import { ObservonicService } from './services/observonic.service';
+import { OperatingSystem } from '@capacitor/device/dist/esm/definitions';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,8 @@ import { ObservonicService } from './services/observonic.service';
 })
 export class AppComponent implements OnInit {
   protected labels!: LabelURL[];
+
+  protected osIcon: string = '';
 
   protected label: LabelURL = {
     id: '',
@@ -34,6 +37,8 @@ export class AppComponent implements OnInit {
     this.observonicService.passwordsChanged$.subscribe((data) => {
       if (data) this.initLabels();
     });
+    const os = await this.keyonicService.getOperatingSystem();
+    this.getOSIcon(os);
   }
 
   private initLabels() {
@@ -87,5 +92,22 @@ export class AppComponent implements OnInit {
     const { role } = await modal.onWillDismiss();
     if (role === 'cancelled') return;
     this.initLabels();
+  }
+
+  private getOSIcon(os: OperatingSystem) {
+    switch (os) {
+      case 'windows':
+        this.osIcon = 'logo-windows';
+        break;
+      case 'mac' || 'ios':
+        this.osIcon = 'logo-apple';
+        break;
+      case 'android':
+        this.osIcon = 'logo-android';
+        break;
+      default:
+        this.osIcon = 'logo-ionic';
+        break;
+    }
   }
 }

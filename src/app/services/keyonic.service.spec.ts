@@ -106,4 +106,9 @@ describe('KeyonicService', () => {
     const actual = service.decryptPassword(hash);
     expect(expected).toEqual(actual);
   });
+
+  it('should getOperatingSystem', () => {
+    const os = service.getOperatingSystem();
+    expect(os).toBeDefined();
+  });
 });

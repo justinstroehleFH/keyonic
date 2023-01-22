@@ -6,6 +6,8 @@ import cryptonic from 'cryptonic';
 import { v4 as uuidv4 } from 'uuid';
 import { labels, passwords } from '../libs/globals';
 import { ObservonicService } from './observonic.service';
+import { Device } from '@capacitor/device';
+import { OperatingSystem } from '@capacitor/device/dist/esm/definitions';
 
 @Injectable({
   providedIn: 'root',
@@ -76,7 +78,6 @@ export class KeyonicService implements OnInit {
     });
   }
 
-  //TODO rename
   public getPasswordsByLabel(filter: string): Password[] {
     return this.passwords.filter((e) =>
       filter !== 'All' ? e.label.includes(filter) : true
@@ -99,12 +100,14 @@ export class KeyonicService implements OnInit {
   public async saveEntry(password: Password) {
     this.passwords.push(password);
     await this.storage.set('passwords', this.passwords);
+    this.observonicService.passwordsChanged(true);
   }
 
   public async deleteEntry(id: string) {
     const index = this.passwords.findIndex((e) => e.id === id);
     this.passwords.splice(index, 1);
     await this.storage.set('passwords', this.passwords);
+    this.observonicService.passwordsChanged(true);
   }
 
   async updateEntry(password: Password) {
@@ -116,6 +119,7 @@ export class KeyonicService implements OnInit {
     this.passwords[index].username = password.username;
 
     await this.storage.set('passwords', this.passwords);
+    this.observonicService.passwordsChanged(true);
   }
 
   public async editLabel(label: Label) {
@@ -147,5 +151,10 @@ export class KeyonicService implements OnInit {
   private async initPasswords() {
     this.passwords = passwords;
     await this.storage.set('passwords', passwords);
+  }
+
+  public async getOperatingSystem(): Promise<OperatingSystem> {
+    const info = await Device.getInfo();
+    return info.operatingSystem;
   }
 }

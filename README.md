@@ -1,5 +1,10 @@
 # Keyonic
 
+## Prerequisities
+
+- Angular CLI
+- Ionic CLI
+
 ## Run as Desktop Webapplication
 
 ```bash

@@ -4,7 +4,7 @@
       <ion-content>
         <ion-list id="label-list">
           <ion-list-header>
-            <ion-label>KEYONIC</ion-label>
+            <ion-label>KEYONIC </ion-label>
             <ion-button
               data-cy="openLabelModal"
               id="open-label-modal"
@@ -12,7 +12,9 @@
               ><ion-icon slot="icon-only" name="add-outline"></ion-icon
             ></ion-button>
           </ion-list-header>
-          <ion-note>Credential manager</ion-note>
+          <ion-note
+            >Credential manager <ion-icon [name]="osIcon"></ion-icon
+          ></ion-note>
           <ion-menu-toggle auto-hide="false">
             <ion-item
               routerDirection="root"
