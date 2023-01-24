@@ -31,6 +31,8 @@
 
 ### E2E tests (Cypress)
 
+The application needs to run on port 8110, as cypress is configured on the localhost:8110.
+
 ```console
 ./keyonic:$ ionic serve -p 8110
 ./keyonic:$ npx cypress open
