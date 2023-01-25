@@ -34,7 +34,6 @@
     "@ionic/storage-angular": "^3.0.6",
     "bindings": "^1.5.0",
     "cordova-plugin-file": "^7.0.0",
-    "cordova-plugin-inappbrowser": "^5.0.0",
     "cryptonic": "^1.2.0",
     "ionicons": "^6.0.3",
     "path": "^0.12.7",

@@ -85,7 +85,7 @@ export class KeyonicService implements OnInit {
   }
 
   //TODO rename
-  public getPasswordsById(id: string): Password | undefined {
+  public getPasswordById(id: string): Password | undefined {
     return this.passwords.find((e) => e.id === id);
   }
 

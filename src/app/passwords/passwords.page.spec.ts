@@ -4,15 +4,15 @@ import { IonicModule } from '@ionic/angular';
 import { KeyonicService } from '../services/keyonic.service';
 import { KeyonicMockService } from '../services/mocks/keyonic-mock.service';
 
-import { LabelPage } from './label.page';
+import { PasswordsPage } from './passwords.page';
 
-describe('LabelPage', () => {
-  let component: LabelPage;
-  let fixture: ComponentFixture<LabelPage>;
+describe('PasswordsPage', () => {
+  let component: PasswordsPage;
+  let fixture: ComponentFixture<PasswordsPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LabelPage],
+      declarations: [PasswordsPage],
       imports: [IonicModule.forRoot(), RouterModule.forRoot([])],
       providers: [
         {
@@ -22,7 +22,7 @@ describe('LabelPage', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LabelPage);
+    fixture = TestBed.createComponent(PasswordsPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

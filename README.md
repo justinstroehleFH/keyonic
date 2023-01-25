@@ -1,5 +1,10 @@
 # Keyonic
 
+## Authors
+
+- [Ströhle Justin](mailto:justin.stroehle@students.fhv.at)
+- [Tomasini Nico](mailto:nico.tomasini@students.fhv.at)
+
 ## Prerequisities
 
 - Angular CLI (>= v12)
@@ -53,3 +58,7 @@ Before starting the test in cypress, the entry with the key "labels" should be d
 ## Cryptonic
 
 [Cryptonic](https://www.npmjs.com/package/cryptonic) is a NPM package, created and publish ourselves in order to encrypt and decrypt the passwords. We did not manage to include a C++ module in our project, nevertheless, a basic "Hello World" code using C++ and Node-Gyp is still in the NPM package.
+
+## Information
+
+When first starting the application, the Indexed DB is filled with some example data already.

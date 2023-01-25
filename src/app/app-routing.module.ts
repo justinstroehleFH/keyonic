@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: 'label/:id/:name',
     loadChildren: () =>
-      import('./label/label.module').then((m) => m.LabelPageModule),
+      import('./passwords/passwords.module').then((m) => m.PasswordsPageModule),
   },
   {
     path: 'details/:hash',

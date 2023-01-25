@@ -84,7 +84,7 @@ export class DetailsPage implements OnInit {
   }
 
   private getEntry(entryId: string) {
-    const entry = this.keyonicService.getPasswordsById(entryId);
+    const entry = this.keyonicService.getPasswordById(entryId);
     if (entry) {
       this.entry = entry;
       this.newEntry = false;

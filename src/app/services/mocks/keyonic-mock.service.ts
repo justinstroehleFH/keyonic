@@ -42,7 +42,7 @@ export class KeyonicMockService {
     ];
   }
 
-  public getPasswordsById(id: string): Password | undefined {
+  public getPasswordById(id: string): Password | undefined {
     if (id) {
       return {
         id: id,

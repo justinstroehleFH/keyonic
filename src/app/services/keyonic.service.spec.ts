@@ -48,7 +48,7 @@ describe('KeyonicService', () => {
     expect(store).toBeDefined();
   });
 
-  it('should saveEntry getPasswordsById updateEntry getPasswordsByLabel deleteEntry', async () => {
+  it('should saveEntry getPasswordById updateEntry getPasswordsByLabel deleteEntry', async () => {
     service.createStorage();
     let password: Password = {
       id: '1',
@@ -59,7 +59,7 @@ describe('KeyonicService', () => {
       label: ['1'],
     };
     await service.saveEntry(password);
-    const passwordById = service.getPasswordsById('1');
+    const passwordById = service.getPasswordById('1');
     expect(password).toEqual(passwordById as Password);
 
     password.id = '2';

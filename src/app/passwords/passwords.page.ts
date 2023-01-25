@@ -4,14 +4,13 @@ import { AlertController } from '@ionic/angular';
 import { Password } from '../libs/types';
 import { KeyonicService } from '../services/keyonic.service';
 import { ObservonicService } from '../services/observonic.service';
-import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 @Component({
   selector: 'app-label',
-  templateUrl: './label.page.html',
-  styleUrls: ['./label.page.scss'],
+  templateUrl: './passwords.page.html',
+  styleUrls: ['./passwords.page.scss'],
 })
-export class LabelPage implements OnInit {
+export class PasswordsPage implements OnInit {
   protected label!: string;
   protected labelName!: string;
   protected selected!: any;
@@ -24,8 +23,7 @@ export class LabelPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private keyonicService: KeyonicService,
     private alertController: AlertController,
-    private observonicService: ObservonicService,
-    private inAppBrowser: InAppBrowser
+    private observonicService: ObservonicService
   ) {}
 
   ngOnInit() {
