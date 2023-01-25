@@ -57,7 +57,7 @@ export const passwords = [
     username: 'gitlover420',
     password: cryptonic.encrypt('mainBranchAlways'),
     url: 'www.github.com',
-    label: ['2', '1'],
+    label: ['2', '3'],
   },
   {
     id: '4',

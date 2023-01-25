@@ -17,7 +17,14 @@
 ./keyonic:$ ionic build
 ./keyonic:$ npx cap add @capacitor-community/electron
 ./keyonic:$ cd electron
-./keyonic/electron:$ npm run electron:start ?
+./keyonic/electron:$ npm run electron:start
+```
+
+### Rebuild (when electron folder has already been created)
+
+```console
+./keyonic:$ ionic build
+./keyonic:$ npx cap sync @capacitor-community/electron
 ```
 
 ## Run in Browser
