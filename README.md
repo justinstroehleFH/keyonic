@@ -5,8 +5,13 @@
 - [Ströhle Justin](mailto:justin.stroehle@students.fhv.at)
 - [Tomasini Nico](mailto:nico.tomasini@students.fhv.at)
 
-## Prerequisities
+## About
 
+Keyonic is a desktop webapplication implemented with Ionic.
+
+## Prerequisites
+
+- Node
 - Angular CLI (>= v12)
 - Ionic CLI (v6)
 
